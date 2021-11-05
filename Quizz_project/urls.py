@@ -15,19 +15,20 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls import include, url
-from django.contrib import admin
 from django.urls import path
-from Quizz_project_app.views import index
-from Quizz_project_app.views import listing
-from Quizz_project_app.views import detail
-from Quizz_project_app import views
+from django.views.generic.base import TemplateView
+
+from django.contrib import admin
+from django.contrib.auth import views as auth_views
+from django.urls import path,include
+from Quizz_project_app.views import register, login
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', index),
-    path('listing/',listing),
-    path('detail/<album_id>/',detail),
-    url(r'^search/$', views.search),
+    path('login/', login),
+    path('register/', register, name="register")
 ]
 
 if settings.DEBUG:

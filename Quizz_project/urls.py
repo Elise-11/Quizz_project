@@ -21,14 +21,16 @@ from django.views.generic.base import TemplateView
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
-from Quizz_project_app.views import register, login
+from Quizz_project_app.views import register, loginUser, home, logoutUser
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('login/', login),
-    path('register/', register, name="register")
+    path('login/', loginUser, name='login'),
+    path('register/', register, name='register'),
+    path('home/', home, name='home'),
+    path('logout/', logoutUser, name='logout')
 ]
 
 if settings.DEBUG:

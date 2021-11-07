@@ -1,0 +1,49 @@
+<html>
+
+<head>
+
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+    	<style>
+		body,
+		html {
+			margin: 0;
+			padding: 0;
+			height: 100%;
+			background: #aa8ef3 !important;
+		}
+
+
+        .explo-heading{
+            text-align: center;
+            margin-top: 8%;
+            margin-bottom: -15%;
+            color: #240342;
+        }
+
+        .explo{
+            float:center;
+            margin-top: 20%;
+            margin-left: 40%;
+            margin-right: 25%;
+        }
+
+
+	</style>
+
+</head>
+
+<body>
+
+        <div class="center">
+                <h3 class="explo-heading">Choose your exploration experience</h3>
+            <div class="explo">
+                <a href="{% url 'explo_image' %}" target="_parent"><button>Explore all images</button></a>
+                <a href="{% url 'explo_image' %}" target="_parent"><button>Explore all data</button></a>
+            <div>
+        </div>
+
+</body>
+</html>

@@ -14,24 +14,7 @@
 			height: 100%;
 			background: #aa8ef3 !important;
 		}
-        .register-left{
-            text-align: center;
-            color: #240342;
-            margin-top: 1%;
-        }
-        .register-left input{
-            border: none;
-            border-radius: 1.5rem;
-            padding: 2%;
-            width: 60%;
-            background: #f8f9fa;
-            font-weight: bold;
-            color: #240342;
-            margin-top: 3%;
-            margin-bottom: 3%;
-            cursor: pointer;
 
-        }
         .register-right{
             margin-top: 4%;
             text-align: center;
@@ -41,19 +24,11 @@
             border-bottom-left-radius: 10% 70%;
             border-top-right-radius: 10% 70%;
             border-bottom-right-radius: 10% 70%;
-        }
-        .register-left img{
-            margin-top: 5%;
-            margin-bottom: 4%;
-            max-width: 250px;
-            max-height: 250px;
+            margin-right: 35%;
+            margin-left: 25%;
         }
 
-        .register-left p{
-            font-weight: lighter;
-            padding: 12%;
-            margin-top: -9%;
-        }
+
         .register .register-form{
             padding: 10%;
             margin-top: 20%;
@@ -108,8 +83,22 @@
 				   		<div class="d-flex justify-content-center mt-3 login_container">
 				 			<input class="btnRegister" type="submit" value="Login">
 				   		</div>
+                            </div>
+
+                            {% for message in messages %}
+                                <p id="messages">{{ message }}</p>
+                            {% endfor %}
+
+                            <div class="mt-4">
+                                <div class="d-flex justify-content-center links">
+                                    Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
+                                </div>
+
+                            </div>
 					</form>
 				</div>
+
+
 
     <script>
                     /* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript

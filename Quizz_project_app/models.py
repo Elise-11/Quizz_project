@@ -21,7 +21,6 @@ def save_user_profile(sender, instance, **kwargs):
 
 
 class Images(models.Model):
-    img_id = models.IntegerField()
     img_name = models.IntegerField()
     img_description = models.TextField()
     img_mode = models.CharField(max_length=60)
@@ -29,7 +28,6 @@ class Images(models.Model):
     img_component = models.CharField(max_length=60)
     img_doi = models.CharField(max_length=60)
     img_organism = models.CharField(max_length=60)
-    img_url = models.CharField(max_length=60)
 
 
 class Question(models.Model):
@@ -38,7 +36,6 @@ class Question(models.Model):
     quest_type= models.CharField(max_length=60)
     quest_image_field = models.CharField(max_length=60)
     quest_point= models.IntegerField()
-    q_id = models.IntegerField()
     n_answer = models.IntegerField()
     n_image = models.IntegerField()
 

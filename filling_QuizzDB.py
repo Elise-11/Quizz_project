@@ -134,9 +134,8 @@ def run():
                              quest_type=dictionnary_lineQuestion[iterator][2],
                              quest_image_field=dictionnary_lineQuestion[iterator][3],
                              quest_point =int(dictionnary_lineQuestion[iterator][4]),
-                             q_id = int(dictionnary_lineQuestion[iterator][5]),
-                             n_answer=int(dictionnary_lineQuestion[iterator][6]),
-                             n_image=int(dictionnary_lineQuestion[iterator][7]))
+                             n_answer=int(dictionnary_lineQuestion[iterator][5]),
+                             n_image=int(dictionnary_lineQuestion[iterator][6]))
 
         ## If we don't read the first line
         ## Splitting of the line by coma
@@ -147,9 +146,8 @@ def run():
                                          quest_type=dictionnary_lineQuestion[iterator][2],
                                          quest_image_field=dictionnary_lineQuestion[iterator][3],
                                          quest_point =int(dictionnary_lineQuestion[iterator][4]),
-                                         q_id = int(dictionnary_lineQuestion[iterator][5]),
-                                         n_answer=int(dictionnary_lineQuestion[iterator][6]),
-                                         n_image=int(dictionnary_lineQuestion[iterator][7])).exists()):
+                                         n_answer=int(dictionnary_lineQuestion[iterator][5]),
+                                         n_image=int(dictionnary_lineQuestion[iterator][6])).exists()):
                     question.save()
 
 
@@ -325,8 +323,7 @@ def run():
 
     for iterator in range(1, counterTableImages):
 
-        images = Images(img_id=int(dictionnary_lineImages[iterator][0]),
-                         img_name=int(dictionnary_lineImages[iterator][1]),
+        images = Images(img_name=int(dictionnary_lineImages[iterator][1]),
                          img_description=dictionnary_lineImages[iterator][2],
                          img_mode=dictionnary_lineImages[iterator][3],
                          img_cell_type=dictionnary_lineImages[iterator][4],
@@ -335,8 +332,7 @@ def run():
                          img_organism=dictionnary_lineImages[iterator][7])
 
 
-        if (not Images.objects.filter(img_id=int(dictionnary_lineImages[iterator][0]),
-                                       img_name=int(dictionnary_lineImages[iterator][1]),
+        if (not Images.objects.filter(img_name=int(dictionnary_lineImages[iterator][1]),
                                        img_description=dictionnary_lineImages[iterator][2],
                                        img_mode=dictionnary_lineImages[iterator][3],
                                        img_cell_type=dictionnary_lineImages[iterator][4],

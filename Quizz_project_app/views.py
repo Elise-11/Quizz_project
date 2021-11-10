@@ -18,6 +18,10 @@ def register(request):
 
             return redirect('login')
 
+        else:
+            messages.info(request, 'Your password must be more than 9 characters long,'
+                                   ' must not be entirely numeric and must be different from your username !')
+
     context = {'form': form}
     return render(request, 'Registration/register.html', context)
 

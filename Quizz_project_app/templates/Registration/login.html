@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 
 <head>
@@ -6,54 +7,7 @@
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
-    	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #aa8ef3 !important;
-		}
-
-        .register-right{
-            margin-top: 4%;
-            text-align: center;
-            color: #aa8ef3;
-            background: #260548;
-            border-top-left-radius: 10% 70%;
-            border-bottom-left-radius: 10% 70%;
-            border-top-right-radius: 10% 70%;
-            border-bottom-right-radius: 10% 70%;
-            margin-right: 35%;
-            margin-left: 25%;
-        }
-
-
-        .register .register-form{
-            padding: 10%;
-            margin-top: 20%;
-            margin-bottom: 20%;
-        }
-        .btnRegister{
-            float: center;
-            margin-top: 15%;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 2%;
-            background: #aa8ef3;
-            color: #240342;
-            font-weight: 600;
-            width: 70%;
-            cursor: pointer;
-        }
-
-        .register-heading{
-            text-align: center;
-            margin-top: 8%;
-            margin-bottom: -15%;
-            color: #aa8ef3;
-        }
-	</style>
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/login.css" %}?{% now "U"%}">
 
 </head>
 

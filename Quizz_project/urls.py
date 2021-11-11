@@ -21,19 +21,19 @@ from django.views.generic.base import TemplateView
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
-from Quizz_project_app.views import register, login_user, home, logoutUser, explo_image, explo_data, explo
+from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro
 from django.conf import settings
+
 from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_user, name='login'),
     path('register/', register, name='register'),
-    path('home/', home, name='home'),
     path('logout/', logoutUser, name='logout'),
+    path('choice/', choice, name='choice'),
+    path('QuizzMicro/', QuizzMicro.as_view(), name='QuizzMicro'),
     path('explo/', explo, name='explo'),
-    path('explo_image/', explo_image, name='explo_image'),
-    path('explo_data/', explo_data, name='explo_data'),
 ]
 
 if settings.DEBUG:

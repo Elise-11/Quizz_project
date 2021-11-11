@@ -1,0 +1,81 @@
+{% load static %}
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro.css" %}?{% now "U"%}">
+{% block extrahead %}
+
+{% endblock %}
+{% block content %}
+
+    <div class= "Question">
+    <div class="home-title">{{ question }}</div>
+
+
+    {% if choiceQuestion == "microscopy" %}
+
+        <form method="POST" action="{% url 'QuizzMicro'%}">
+
+
+        {% csrf_token %}
+
+        {% for i,j in dico_url.items %}
+
+            {% if i == 0 %}
+
+                <div class = "Question">
+
+                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ j.1 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ j.2}}" id="img_0_{{ i }}" class="image_size">
+
+
+                    {{ form.firstQuestion }}
+
+                </div>
+
+            {% endif %}
+
+
+            {% if i == 1 %}
+
+                <div class= "Question">
+
+                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
+                    {{ form.secondQuestion }}
+                </div>
+
+            {% endif %}
+
+            {% if i == 2 %}
+
+                <div class= "Question">
+
+                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
+                    {{ form.thirdQuestion }}
+                </div>
+
+            {% endif %}
+
+            {% if i == 3 %}
+                 <div class= "Question">
+
+                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
+                    {{ form.fourthQuestion }}
+                </div>
+
+
+            {% endif %}
+
+
+        {% endfor %}
+
+
+        <button type="submit">Save</button>
+
+        </form>
+        </div>
+
+    {% endif %}
+
+{% endblock content %}

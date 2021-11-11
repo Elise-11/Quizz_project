@@ -1,0 +1,22 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #aa8ef3 !important;
+}
+
+.image_size{
+    max-width: 250px;
+    max-height: 250px;
+    text-align: center;
+}
+
+.Question{
+    font-size: large;
+    text-align: center;
+}
+
+ul {
+list-style-type: none;
+}

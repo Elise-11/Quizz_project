@@ -1,0 +1,23 @@
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/choice.css" %}?{% now "U"%}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+<h3></h3>
+
+  <span class="hello-msg">Hello {{request.user}}</span>
+  <span><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+
+    <a href="{% url 'QuizzMicro' %}"><img src ="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" class=pictureChoice></a>
+    <a href="{% url 'QuizzMicro' %}"><img src="{% static "/Quizz_project_app/img/img_choice/cell.png"%}" class=pictureCellChoice></a>
+    <a href="{% url 'explo' %}"><img src="{% static "/Quizz_project_app/img/img_choice/search.png"%}" class=pictureChoice></a>
+    <a href="{% url 'explo' %}"><img src="{% static "/Quizz_project_app/img/img_choice/file.png"%}" class=pictureFile></a>
+
+    <div class=textPictureMicroscopyChoice>Microscopy Quizz</div>
+    <div class=textCellularComponentChoice>Cellular Component Quizz</div>
+    <div class=explorationImages>Search Images</div>
+    <div class=explorationImages>Explore Images</div>
+
+
+{% endblock content %}
+

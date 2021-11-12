@@ -16,17 +16,13 @@
 
         {% csrf_token %}
 
-        {% for i,j in dico_url.items %}
+        {% for i,j in dico_images_path.items %}
 
             {% if i == 0 %}
 
                 <div class = "Question">
 
                     <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
-                    <img src="{{ j.1 }}" id="img_0_{{ i }}" class="image_size">
-                    <img src="{{ j.2}}" id="img_0_{{ i }}" class="image_size">
-
-
                     {{ form.firstQuestion }}
 
                 </div>
@@ -39,7 +35,6 @@
                 <div class= "Question">
 
                     <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
-                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
                     {{ form.secondQuestion }}
                 </div>
 
@@ -50,7 +45,6 @@
                 <div class= "Question">
 
                     <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
-                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
                     {{ form.thirdQuestion }}
                 </div>
 
@@ -60,18 +54,25 @@
                  <div class= "Question">
 
                     <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
-                    <img src="{{ j.1 }}" id="img_1_{{ i }}" class="image_size">
                     {{ form.fourthQuestion }}
                 </div>
 
 
             {% endif %}
 
+            {% if i == 4 %}
+                 <div class= "Question">
+
+                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    {{ form.fifthQuestion }}
+                </div>
+
+            {% endif %}
 
         {% endfor %}
 
 
-        <button type="submit">Save</button>
+        <button type="submit">Save Answers</button>
 
         </form>
         </div>

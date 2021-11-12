@@ -21,6 +21,7 @@ class QuizzMicroscopy(forms.Form):
 	secondQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	thirdQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	fourthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
+	fifthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
 class SearchBar(forms.Form):
     searchBar = forms.CharField(max_length=200)

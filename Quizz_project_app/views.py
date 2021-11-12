@@ -79,18 +79,21 @@ class QuizzMicro(View):
         ## We extract the question concerning the microscopy
         question = Question.objects.get(quest_type='microscopy')
 
-        ## For each quizz, 10 Questions
-        listItems = range(0, 4)
+        # 5 questions
+        listItems = range(0, 5)
 
         ## Creations a dictionnary to store the URLs per question
 
-        dico_url = {}
+        dico_images_path = {}
+        dico_images = {}
+        used_images = []
+
 
         ## For each question
         for iterator in listItems:
 
             ## Initializing the list of URLs
-            dico_url[iterator] = []
+            dico_images_path[iterator] = []
 
             microscopy = Answers.objects.filter(q_id=1)
             microscopy = microscopy.all()
@@ -100,12 +103,9 @@ class QuizzMicro(View):
             ## Creating a dictionnary to store the images
             ## And a list to store already used images
 
-            dico_images = {}
-            used_images = []
+            ## For the five picture
 
-            ## For the four pictures
-
-            for iterator2 in range(0, 2):
+            for iterator2 in range(0, 1):
 
                 ## If the dictionnary of images is empty
                 if (dico_images == {}):
@@ -116,13 +116,24 @@ class QuizzMicro(View):
 
                     ## We choose a picture randomly in the databaseAnd we add it to the dictionnary_images and
                     ## to the used images
-
                     random_choice = random.choice(images)
-                    img_name = str(random_choice.img_name)
-                    file_ext = ".jpg"
-                    filepath = path_img + img_name + file_ext
-                    dico_images[iterator2] = filepath
-                    used_images.append(filepath)
+
+                    if random_choice.img_name in used_images:
+                        random_choice = random.choice(images)
+                        img_name = str(random_choice.img_name)
+                        file_ext = ".jpg"
+                        filepath = path_img + img_name + file_ext
+                        dico_images[iterator2] = filepath
+                        used_images.append(random_choice.img_name)
+
+                    else:
+                        img_name = str(random_choice.img_name)
+                        file_ext = ".jpg"
+                        filepath = path_img + img_name + file_ext
+                        dico_images[iterator2] = filepath
+                        used_images.append(random_choice.img_name)
+
+
 
                 else:
 
@@ -131,42 +142,41 @@ class QuizzMicro(View):
 
                     images = Images.objects.filter(img_mode=microscopy)
                     images = images.all()
+
                     random_choice = random.choice(images)
-                    img_name = str(random_choice.img_name)
-                    file_ext = ".jpg"
-                    filepath = path_img + img_name + file_ext
 
-                    ## If the random picture corresponds to a already, used picture, so, While the picture corresponds
-                    ## to a already used picture, we choose another picture
-
-                    while (filepath in used_images):
+                    if random_choice.img_name in used_images:
                         random_choice = random.choice(images)
                         img_name = str(random_choice.img_name)
                         file_ext = ".jpg"
-                        filepath = path_img + str(img_name) + file_ext
+                        filepath = path_img + img_name + file_ext
+                        dico_images[iterator2] = filepath
+                        used_images.append(random_choice.img_name)
 
-
-                    ## And then, we add it to the dictionnary of imagesand to the used images
-
-                    dico_images[iterator2] = filepath
-                    used_images.append(filepath)
+                    else:
+                        img_name = str(random_choice.img_name)
+                        file_ext = ".jpg"
+                        filepath = path_img + img_name + file_ext
+                        dico_images[iterator2] = filepath
+                        used_images.append(random_choice.img_name)
 
             ## For all the elements in the dictionnary of pictures
             for iterator3 in dico_images:
                 ## We replace all the spaces by plus sign to get the URL of the picture
                 ## And we append the URL to the URL dictionnary
 
-                dico_url[iterator].append(dico_images[iterator3])
+                dico_images_path[iterator].append(dico_images[iterator3])
 
         request.session['choiceQuestion'] = question.quest_type
         request.session['question'] = question.quest
-        request.session['dico_url'] = dico_url
+        request.session['dico_images_path'] = dico_images_path
 
         return render(request, "Quizz/Quizz_microscopy.html",
                       {'choiceQuestion': request.session.get('choiceQuestion'),
                        'question': request.session.get('question'), 'form': QuizzMicro.form,
-                       'dico_url': request.session.get('dico_url'),
+                       'dico_images_path': request.session.get('dico_images_path'),
                        'score': score})
+
 
 
     def post(self, request):
@@ -185,17 +195,18 @@ class QuizzMicro(View):
             list_answers = [form.cleaned_data['firstQuestion'],
                             form.cleaned_data['secondQuestion'],
                             form.cleaned_data['thirdQuestion'],
-                            form.cleaned_data['fourthQuestion']
+                            form.cleaned_data['fourthQuestion'],
+                            form.cleaned_data['fifthQuestion']
                             ]
 
             request.session['list_answers'] = list_answers
 
-            list_answer_to_answer = []
-            list_description_answer = []
+            list_answer = []
+            list_user_answer = []
 
             gainedScore = 0
 
-            for iterator4 in range(0, 4):
+            for iterator4 in range(0, 5):
                 user = User.objects.get(username="{}".format(request.user.username))
 
                 usernameComposed = request.user.username + "_{}".format(
@@ -204,11 +215,11 @@ class QuizzMicro(View):
 
                 answers = Answers.objects.get(answer_id=userAnswer.goodAnswerId)
 
-                score = Question.objects.get(question_id=1)
+                point = Question.objects.get(quest_point=quest_id)
 
                 if (list_answers[iterator4] == answers.answer):
                     list_answer_to_answer.append("TrueQuestion")
-                    gainedScore += score.points
+                    gainedScore += point
 
 
                 else:

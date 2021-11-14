@@ -10,8 +10,6 @@ from django.contrib.auth.models import User
 import random
 from django.views import View
 
-#import hashlib
-
 
 def register(request):
     form = CreateUserForm()
@@ -84,101 +82,42 @@ class QuizzMicro(View):
 
         ## Creations a dictionnary to store the URLs per question
 
-        dico_images_path = {}
-        dico_images = {}
+
+        list_images = []
         used_images = []
+        #génère liste de réponses correcpondant à q_id 1
+        microscopy_answer = [x.answer for x in Answers.objects.filter(q_id=1).all()]
+        images = list(Images.objects.filter(img_mode__in=microscopy_answer).all())
+
 
         ## For each question
-        for iterator in listItems:
+        for items in listItems:
 
-            ## Initializing the list of URLs
-            dico_images_path[iterator] = []
+            ## We take images whose the microscopy type corresponds to our microscopy answer
+            ## We choose a picture randomly in the databaseAnd we add it to the dictionnary_images and
+            ## to the used images
 
-            microscopy = Answers.objects.filter(q_id=1)
-            microscopy = microscopy.all()
-            random_microscopy = random.choice(microscopy)
-            microscopy = random_microscopy.answer
-
-            ## Creating a dictionnary to store the images
-            ## And a list to store already used images
-
-            ## For the five picture
-
-            for iterator2 in range(0, 1):
-
-                ## If the dictionnary of images is empty
-                if (dico_images == {}):
-
-                    ## We take images whose the microscopy type corresponds to our microscopy answer
-                    images = Images.objects.filter(img_mode=microscopy)
-                    images = images.all()
-
-                    ## We choose a picture randomly in the databaseAnd we add it to the dictionnary_images and
-                    ## to the used images
-                    random_choice = random.choice(images)
-
-                    if random_choice.img_name in used_images:
-                        random_choice = random.choice(images)
-                        img_name = str(random_choice.img_name)
-                        file_ext = ".jpg"
-                        filepath = path_img + img_name + file_ext
-                        dico_images[iterator2] = filepath
-                        used_images.append(random_choice.img_name)
-
-                    else:
-                        img_name = str(random_choice.img_name)
-                        file_ext = ".jpg"
-                        filepath = path_img + img_name + file_ext
-                        dico_images[iterator2] = filepath
-                        used_images.append(random_choice.img_name)
-
-                else:
-
-                    ## If the dictionnary of images is not empty We take images whose the microscopy type
-                    ## corresponds to our microscopy answerWe choose a picture randomly in the database
-
-                    images = Images.objects.filter(img_mode=microscopy)
-                    images = images.all()
-
-                    random_choice = random.choice(images)
-
-                    if random_choice.img_name in used_images:
-                        random_choice = random.choice(images)
-                        img_name = str(random_choice.img_name)
-                        file_ext = ".jpg"
-                        filepath = path_img + img_name + file_ext
-                        dico_images[iterator2] = filepath
-                        used_images.append(random_choice.img_name)
-
-                    else:
-                        img_name = str(random_choice.img_name)
-                        file_ext = ".jpg"
-                        filepath = path_img + img_name + file_ext
-                        dico_images[iterator2] = filepath
-                        used_images.append(random_choice.img_name)
-
-            ## For all the elements in the dictionnary of pictures
-            for iterator3 in dico_images:
-                ## We replace all the spaces by plus sign to get the URL of the picture
-                ## And we append the URL to the URL dictionnary
-
-                dico_images_path[iterator].append(dico_images[iterator3])
+            random_choice = random.choice(images)
+            img_name = str(random_choice.img_name)
+            file_ext = ".jpg"
+            filepath = path_img + img_name + file_ext
+            list_images.append({'id': random_choice.id, 'filepath': filepath})
+            used_images.append(random_choice.id)
+            images.remove(random_choice)
 
         request.session['choiceQuestion'] = question.quest_type
         request.session['question'] = question.quest
-        request.session['dico_images_path'] = dico_images_path
+        request.session['images'] = list_images
 
         return render(request, "Quizz/Quizz_microscopy.html",
                       {'choiceQuestion': request.session.get('choiceQuestion'),
                        'question': request.session.get('question'), 'form': QuizzMicro.form,
-                       'dico_images_path': request.session.get('dico_images_path'),
+                       'images': request.session.get('images'),
                        'score': score})
 
 
 
     def post(self, request):
-
-
 
         form = QuizzMicro.form(request.POST)
 
@@ -196,23 +135,21 @@ class QuizzMicro(View):
             points_gained = 0
             list_quest_to_answer=[]
             list_correction =[]
+            images_iter = iter(request.session['images'])
 
-            for iterator4 in range(0, 5):
+            for answer in list_answers:
+                question = Question.objects.filter(quest_id=1)
+                image = Images.objects.filter(id=next(images_iter)['id']).first()
+                point_val = question.values('quest_point').first()['quest_point']
 
-                point_val = Question.objects.filter(quest_id=1).values('quest_point')
-
-                if (list_answers[iterator4] == Answers.answer):
+                if answer == image.img_mode:
                     list_quest_to_answer.append("True")
                     points_gained += point_val
 
                 else:
                     list_quest_to_answer.append("False")
 
-                list_correction.append(Answers.definition)
-            print(Profile.score)
-            print(list_quest_to_answer)
-            print(list_correction)
-            print(list_answers)
+                list_correction.append(image.img_mode)
 
             user_id = User.objects.get(id=request.user.id)
             profile_obj = Profile.objects.get(user_id=user_id)
@@ -222,10 +159,30 @@ class QuizzMicro(View):
             request.session['list_quest_to_answer'] = list_quest_to_answer
             request.session['list_correction'] = list_correction
 
-            return redirect('explo')
+            print(list_answers)
+            print(list_correction)
+            print(points_gained)
+            print(list_quest_to_answer)
+
+            return redirect('microscopy_correction')
 
         else:
             print(form.errors)
+
+def microscopy_correction(request):
+
+    user_id = User.objects.get(id=request.user.id)
+    score = Profile.objects.get(user_id=user_id)
+    score = score.score
+
+    return render(request, "Quizz/microscopy_correction.html",
+        {'images': request.session.get('images'),
+        'list_quest_to_answer': request.session.get('list_quest_to_answer'),
+         'list_correction': request.session.get('list_correction'),
+         'list_choices': [('fluorescence microscopy', 0),  ('scanning electron microscopy (SEM)', 1),
+          ('transmission electron microscopy (TEM)', 2), ('phase contrast microscopy', 3)],
+          'list_answers': request.session.get('list_answers'),'score': score})
+
 
 
 def searchBarExplo(request, ):

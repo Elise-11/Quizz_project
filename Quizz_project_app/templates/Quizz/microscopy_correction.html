@@ -1,10 +1,226 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% load static %}
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro_correction.css" %}?{% now "U"%}">
+{% block content %}
 
-</body>
-</html>
+
+<div class="home-title">{{ request.user.username }} your new score : {{ score }} points</div>
+
+    <table name="tableAnswers">
+
+        {% for image in images %}
+
+            {% if forloop.counter == 1 %}
+
+            <tr>
+            <td>
+                <div class = "firstQuestion" name="{{ list_quest_to_answer.0 }}">
+
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+
+                    <ul id="id_firstQuestion">
+
+                    {% for k in list_choices %}
+
+                        {% if k.0 == list_answers.0 %}
+                            <li><label for="id_firstQuestion_{{ k.1 }}"><input type="radio" name="firstQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
+
+                        {% else %}
+                            <li><label for="id_firstQuestion_{{ k.1 }}"><input type="radio" name="firstQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                    {% if list_quest_to_answer.0 == "True"%}
+                        <p id="question1Answer">Good Answer!</p>
+
+                    {% else %}
+                        <p id="question1Answer">Bad Answer !</p>
+
+                    {% endif %}
+
+                    <p id="descriptionQuestion1">{{ list_correction.0 }}</p>
+
+                </div>
+
+            </td>
+            </tr>
+
+            {% endif %}
+
+            {% if forloop.counter == 2 %}
+
+            <tr>
+            <td>
+                <div class ="secondQuestion" name="{{ list_quest_to_answer.1 }}">
+
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+
+                    <ul id="id_secondQuestion">
+
+                    {% for k in list_choices %}
+
+                        {% if k.0 == list_answers.1 %}
+                            <li><label for="id_secondQuestion{{ k.1 }}"><input type="radio" name="secondQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
+
+                        {% else %}
+                            <li><label for="id_secondQuestion{{ k.1 }}"><input type="radio" name="secondQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                    {% if list_quest_to_answer.1 == "True"%}
+                        <p id="question2Answer">Good Answer!</p>
+
+                    {% else %}
+                        <p id="question2Answer">Bad Answer !</p>
+
+                    {% endif %}
+
+                    <p id="descriptionQuestion2">{{ list_correction.1 }}</p>
+
+                </div>
+
+            </td>
+            </tr>
+
+            {% endif %}
+
+            {% if forloop.counter == 3 %}
+
+            <tr>
+            <td>
+                <div class = "thirdQuestion" name="{{ list_quest_to_answer.2 }}">
+
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+
+                    <ul id="id_thirdQuestion">
+
+                    {% for k in list_choices %}
+
+                        {% if k.0 == list_answers.2 %}
+                            <li><label for="id_thirdQuestion{{ k.1 }}"><input type="radio" name="thirdQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
+
+                        {% else %}
+                            <li><label for="id_thirdQuestion{{ k.1 }}"><input type="radio" name="thirdQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                    {% if list_quest_to_answer.2 == "True"%}
+                        <p id="question3Answer">Good Answer!</p>
+
+                    {% else %}
+                        <p id="question3Answer">Bad Answer !</p>
+
+                    {% endif %}
+
+                    <p id="descriptionQuestion3">{{ list_correction.2 }}</p>
+
+                </div>
+
+            </td>
+            </tr>
+
+            {% endif %}
+
+            {% if forloop.counter == 4 %}
+
+            <tr>
+            <td>
+                <div class = "forthQuestion" name="{{ list_quest_to_answer.3 }}">
+
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+
+                    <ul id="id_forthQuestion">
+
+                    {% for k in list_choices %}
+
+                        {% if k.0 == list_answers.3 %}
+                            <li><label for="id_forthQuestion{{ k.1 }}"><input type="radio" name="forthQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
+
+                        {% else %}
+                            <li><label for="forthQuestion{{ k.1 }}"><input type="radio" name="forthQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                    {% if list_quest_to_answer.3 == "True"%}
+                        <p id="question4Answer">Good Answer!</p>
+
+                    {% else %}
+                        <p id="question4Answer">Bad Answer !</p>
+
+                    {% endif %}
+
+                    <p id="descriptionQuestion4">{{ list_correction.3 }}</p>
+
+                </div>
+
+            </td>
+            </tr>
+
+            {% endif %}
+
+            {% if forloop.counter == 5 %}
+
+            <tr>
+            <td>
+                <div class = "fifthQuestion" name="{{ list_quest_to_answer.4 }}">
+
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+
+                    <ul id="id_fifthQuestion">
+
+                    {% for k in list_choices %}
+
+                        {% if k.0 == list_answers.4 %}
+                            <li><label for="id_fifthQuestion{{ k.1 }}"><input type="radio" name="fifthQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
+
+                        {% else %}
+                            <li><label for="id_fifthQuestion{{ k.1 }}"><input type="radio" name="fifthQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                    </ul>
+
+                    {% if list_quest_to_answer.4 == "True"%}
+                        <p id="question5Answer">Good Answer!</p>
+
+                    {% else %}
+                        <p id="question5Answer">Bad Answer !</p>
+
+                    {% endif %}
+
+                    <p id="descriptionQuestion">{{ list_correction.4}}</p>
+
+                </div>
+
+            </td>
+            </tr>
+
+            {% endif %}
+
+
+        {% endfor %}
+        <tr>
+        <td>
+        <button id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
+        </td>
+        </tr>
+    </table>
+
+{% endblock content %}

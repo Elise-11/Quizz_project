@@ -1,0 +1,12 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #aa8ef3 !important;
+}
+
+.img{
+    max-width: 200px;
+    max-height: 200px;
+}

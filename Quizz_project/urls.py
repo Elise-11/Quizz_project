@@ -21,7 +21,7 @@ from django.views.generic.base import TemplateView
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
-from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro
+from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro, microscopy_correction
 from django.conf import settings
 
 from django.conf.urls.static import static
@@ -33,6 +33,7 @@ urlpatterns = [
     path('logout/', logoutUser, name='logout'),
     path('choice/', choice, name='choice'),
     path('QuizzMicro/', QuizzMicro.as_view(), name='QuizzMicro'),
+    path('QuizzMicro/Correction', microscopy_correction, name = 'microscopy_correction'),
     path('explo/', explo, name='explo'),
 ]
 

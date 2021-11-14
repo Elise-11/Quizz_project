@@ -19,3 +19,17 @@ html {
     max-width: 180px;
     max-height: 180px;
 }
+
+.img_position{
+    margin-top: 11%;
+    text-align: center;
+    margin-right: 4%;
+    margin-left: 4%;
+    tab-size: 30;
+}
+.img_left_left{
+    margin-top: 1%;
+    text-align: center;
+    margin-right: 17%;
+    margin-left: 10%;
+}

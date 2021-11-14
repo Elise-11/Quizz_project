@@ -1,5 +1,7 @@
 {% load static %}
 <link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro.css" %}?{% now "U"%}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
 {% block extrahead %}
 
 {% endblock %}
@@ -16,13 +18,13 @@
 
         {% csrf_token %}
 
-        {% for i,j in dico_images_path.items %}
+        {% for image in images %}
 
-            {% if i == 0 %}
+            {% if forloop.counter == 1 %}
 
                 <div class = "Question">
 
-                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}" class="image_size">
                     {{ form.firstQuestion }}
 
                 </div>
@@ -30,40 +32,40 @@
             {% endif %}
 
 
-            {% if i == 1 %}
+            {% if forloop.counter == 2 %}
 
                 <div class= "Question">
 
-                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}" class="image_size">
                     {{ form.secondQuestion }}
                 </div>
 
             {% endif %}
 
-            {% if i == 2 %}
+            {% if forloop.counter == 3 %}
 
                 <div class= "Question">
 
-                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}" class="image_size">
                     {{ form.thirdQuestion }}
                 </div>
 
             {% endif %}
 
-            {% if i == 3 %}
+            {% if forloop.counter == 4 %}
                  <div class= "Question">
 
-                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}" class="image_size">
                     {{ form.fourthQuestion }}
                 </div>
 
 
             {% endif %}
 
-            {% if i == 4 %}
+            {% if forloop.counter == 5 %}
                  <div class= "Question">
 
-                    <img src="{{ j.0 }}" id="img_0_{{ i }}" class="image_size">
+                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}" class="image_size">
                     {{ form.fifthQuestion }}
                 </div>
 

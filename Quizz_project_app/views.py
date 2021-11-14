@@ -69,7 +69,7 @@ class QuizzMicro(View):
 
     def get(self, request):
         #associate score to user_id logged
-        user_id= User.objects.get(id=request.user.id)
+        user_id = User.objects.get(id=request.user.id)
         score = Profile.objects.get(user_id=user_id)
         score = score.score
 
@@ -87,7 +87,6 @@ class QuizzMicro(View):
         dico_images_path = {}
         dico_images = {}
         used_images = []
-
 
         ## For each question
         for iterator in listItems:
@@ -132,8 +131,6 @@ class QuizzMicro(View):
                         filepath = path_img + img_name + file_ext
                         dico_images[iterator2] = filepath
                         used_images.append(random_choice.img_name)
-
-
 
                 else:
 
@@ -181,12 +178,7 @@ class QuizzMicro(View):
 
     def post(self, request):
 
-        user_id = User.objects.get(id=request.user.id)
-        score = Profile.objects.get(user_id=user_id)
-        score = score.score
 
-        if (score == None):
-            score = 0
 
         form = QuizzMicro.form(request.POST)
 
@@ -201,38 +193,34 @@ class QuizzMicro(View):
 
             request.session['list_answers'] = list_answers
 
-            list_answer = []
-            list_user_answer = []
-
-            gainedScore = 0
+            points_gained = 0
+            list_quest_to_answer=[]
+            list_correction =[]
 
             for iterator4 in range(0, 5):
-                user = User.objects.get(username="{}".format(request.user.username))
 
-                usernameComposed = request.user.username + "_{}".format(
-                    request.session['userGameActive']) + "_{}".format(iterator4)
-                userAnswer = AnswerUser.objects.get(user_question=usernameComposed)
+                point_val = Question.objects.filter(quest_id=1).values('quest_point')
 
-                answers = Answers.objects.get(answer_id=userAnswer.goodAnswerId)
-
-                point = Question.objects.get(quest_point=quest_id)
-
-                if (list_answers[iterator4] == answers.answer):
-                    list_answer_to_answer.append("TrueQuestion")
-                    gainedScore += point
-
+                if (list_answers[iterator4] == Answers.answer):
+                    list_quest_to_answer.append("True")
+                    points_gained += point_val
 
                 else:
-                    list_answer_to_answer.append("FalseQuestion")
+                    list_quest_to_answer.append("False")
 
-                list_description_answer.append(answers.definition)
+                list_correction.append(Answers.definition)
+            print(Profile.score)
+            print(list_quest_to_answer)
+            print(list_correction)
+            print(list_answers)
 
-            Profile.score += gainedScore
-            Profile.save()
-            request.session['gainedScore'] = gainedScore
+            user_id = User.objects.get(id=request.user.id)
+            profile_obj = Profile.objects.get(user_id=user_id)
+            profile_obj.score = profile_obj.score + points_gained
+            profile_obj.save()
 
-            request.session['list_answer_to_answer'] = list_answer_to_answer
-            request.session['list_description_answer'] = list_description_answer
+            request.session['list_quest_to_answer'] = list_quest_to_answer
+            request.session['list_correction'] = list_correction
 
             return redirect('explo')
 

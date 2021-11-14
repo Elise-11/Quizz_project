@@ -6,8 +6,8 @@ html {
     background: #aa8ef3 !important;
 }
 
-.register-right{
-    margin-top: 4%;
+.login-center{
+    margin-top: 6%;
     text-align: center;
     color: #aa8ef3;
     background: #260548;
@@ -19,13 +19,14 @@ html {
     margin-left: 25%;
 }
 
-
 .register .register-form{
     padding: 10%;
-    margin-top: 20%;
-    margin-bottom: 20%;
+    margin-top: 17%;
+    margin-bottom: 4%;
+    margin-right: 17%;
+    margin-left: 17%;
 }
-.btnRegister{
+.btnLogin{
     float: center;
     margin-top: 15%;
     border: none;

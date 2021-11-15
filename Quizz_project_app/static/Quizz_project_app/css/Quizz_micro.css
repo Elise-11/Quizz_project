@@ -22,3 +22,66 @@ html {
 ul {
 list-style-type: none;
 }
+
+.h1 {
+    text-align: center;
+    font-size:large;
+}
+
+.score{
+    font-size: large;
+    font-weight: bold;
+    text-align: left;
+    margin-top: 2%;
+    height:7%;
+    background-color: #260548;
+    color: #f8f9fa;
+}
+
+.img{
+    max-width:15%;
+    height:auto;
+    padding: 7px;
+}
+
+.True{
+    color: #57911d;
+}
+.False{
+    color: #4b0e0e;
+}
+
+.correction{
+    color: #440b0b;
+}
+
+.Answers{
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 4%;
+    text-align: center;
+}
+
+.boxed {
+  border: 2.5px solid;
+  border-color: #260548;
+  width:50%;
+  padding: 5px;
+  font-size:83%;
+  margin-left :25%;
+}
+
+.button{
+  background-color: #240342;
+  border: none;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  border-radius: 2rem;
+  margin-top:2%;
+}

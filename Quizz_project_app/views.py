@@ -162,10 +162,11 @@ class QuizzMicro(View):
             request.session['list_correction'] = list_correction
             request.session['list_description'] = list_description
 
-            print(list_answers)
-            print(list_correction)
-            print(points_gained)
-            print(list_quest_to_answer)
+
+            #print(list_answers)
+            #print(list_correction)
+            #print(points_gained)
+            #print(list_quest_to_answer)
 
             return redirect('microscopy_correction')
 

@@ -1,15 +1,15 @@
 {% load static %}
-<link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro_correction.css" %}?{% now "U"%}">
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro.css" %}?{% now "U"%}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-<script src="{% static "Quizz_project_app/js/definition_pop_up.js" %}"></script>
 
 {% block content %}
 
-<div class="home-title">{{ request.user.username }} score : {{ score }} points</div>
+<div class="score">{{ request.user.username }} new score : {{ score }} points</div>
+
 
     <table class= "Answers" name="tableAnswers">
 
-        <h3>let's see the answers !</h3>
+        <h1 class="h1">let's see the answers !</h1>
         {% for image in images %}
 
             {% if forloop.counter == 1 %}
@@ -46,10 +46,7 @@
 
                     {% endif %}
 
-                    <div class="popup" onclick="show_info()">Click for more info !
-                    <span class="popuptext" id="PopInfo" >{{ list_description.0 }}</span>
-                    </div>
-
+                    <div class="boxed"> Picture informations : {{ list_description.0 }}</div>
 
                 </div>
 
@@ -90,6 +87,7 @@
 
                     {% endif %}
 
+                    <div class="boxed"> Picture informations : {{ list_description.1 }}</div>
 
                 </div>
 
@@ -130,6 +128,8 @@
 
                     {% endif %}
 
+                    <div class="boxed"> Picture informations : {{ list_description.2 }}</div>
+
                 </div>
 
             </td>
@@ -169,6 +169,7 @@
 
                     {% endif %}
 
+                    <div class="boxed"> Picture informations : {{ list_description.3 }}</div>
 
                 </div>
 
@@ -209,6 +210,8 @@
 
                     {% endif %}
 
+                    <div class="boxed"> Picture informations : {{ list_description.4 }}</div>
+
                 </div>
 
             </td>
@@ -216,12 +219,10 @@
 
             {% endif %}
 
-
-
         {% endfor %}
         <tr>
         <td>
-        <button id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
+        <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
         </td>
         </tr>
     </table>

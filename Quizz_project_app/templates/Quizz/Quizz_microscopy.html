@@ -6,10 +6,10 @@
 
 {% endblock %}
 {% block content %}
-<div class="home-title">{{ request.user.username }} score : {{ score }} points</div>
+<div class="score">{{ request.user.username }} score : {{ score }} points</div>
 
     <div class= "Question">
-    <div class="home-title">{{ question }}</div>
+    <div class="h1">{{ question }}</div>
 
 
     {% if choiceQuestion == "microscopy" %}
@@ -74,8 +74,7 @@
 
         {% endfor %}
 
-
-        <button type="submit">Save Answers</button>
+        <button class="button" type="submit">Save Answers</button>
 
         </form>
         </div>

@@ -1,12 +1,15 @@
 {% load static %}
 <link rel="stylesheet" href="{% static "Quizz_project_app/css/Quizz_micro_correction.css" %}?{% now "U"%}">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+<script src="{% static "Quizz_project_app/js/definition_pop_up.js" %}"></script>
+
 {% block content %}
 
+<div class="home-title">{{ request.user.username }} score : {{ score }} points</div>
 
-<div class="home-title">{{ request.user.username }} your new score : {{ score }} points</div>
+    <table class= "Answers" name="tableAnswers">
 
-    <table name="tableAnswers">
-
+        <h3>let's see the answers !</h3>
         {% for image in images %}
 
             {% if forloop.counter == 1 %}
@@ -15,7 +18,7 @@
             <td>
                 <div class = "firstQuestion" name="{{ list_quest_to_answer.0 }}">
 
-                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+                    <img class="img" src="{{ image.filepath }}" id="img_0_{{ image.id }}">
 
                     <ul id="id_firstQuestion">
 
@@ -25,7 +28,7 @@
                             <li><label for="id_firstQuestion_{{ k.1 }}"><input type="radio" name="firstQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
 
                         {% else %}
-                            <li><label for="id_firstQuestion_{{ k.1 }}"><input type="radio" name="firstQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
+
 
                         {% endif %}
 
@@ -34,14 +37,19 @@
                     </ul>
 
                     {% if list_quest_to_answer.0 == "True"%}
-                        <p id="question1Answer">Good Answer!</p>
+                        <p class = "True" id="question1Answer">Congratulations !</p>
 
                     {% else %}
-                        <p id="question1Answer">Bad Answer !</p>
+                        <p class = "False" id="question1Answer">Nice try!</p>
+                        <p class = "correction" id="descriptionQuestion1">The correct answer was : {{ list_correction.0 }}</p>
+
 
                     {% endif %}
 
-                    <p id="descriptionQuestion1">{{ list_correction.0 }}</p>
+                    <div class="popup" onclick="show_info()">Click for more info !
+                    <span class="popuptext" id="PopInfo" >{{ list_description.0 }}</span>
+                    </div>
+
 
                 </div>
 
@@ -56,7 +64,7 @@
             <td>
                 <div class ="secondQuestion" name="{{ list_quest_to_answer.1 }}">
 
-                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+                    <img class="img" src="{{ image.filepath }}" id="img_0_{{ image.id }}">
 
                     <ul id="id_secondQuestion">
 
@@ -66,7 +74,6 @@
                             <li><label for="id_secondQuestion{{ k.1 }}"><input type="radio" name="secondQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
 
                         {% else %}
-                            <li><label for="id_secondQuestion{{ k.1 }}"><input type="radio" name="secondQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
 
                         {% endif %}
 
@@ -75,14 +82,14 @@
                     </ul>
 
                     {% if list_quest_to_answer.1 == "True"%}
-                        <p id="question2Answer">Good Answer!</p>
+                        <p class = "True" id="question2Answer">Congratulations !</p>
 
                     {% else %}
-                        <p id="question2Answer">Bad Answer !</p>
+                        <p class = "False" id="question2Answer">Nice try!</p>
+                        <p class = "correction" id="descriptionQuestion2">The correct answer was : {{ list_correction.1 }}</p>
 
                     {% endif %}
 
-                    <p id="descriptionQuestion2">{{ list_correction.1 }}</p>
 
                 </div>
 
@@ -97,7 +104,7 @@
             <td>
                 <div class = "thirdQuestion" name="{{ list_quest_to_answer.2 }}">
 
-                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+                    <img class="img" src="{{ image.filepath }}" id="img_0_{{ image.id }}">
 
                     <ul id="id_thirdQuestion">
 
@@ -107,7 +114,6 @@
                             <li><label for="id_thirdQuestion{{ k.1 }}"><input type="radio" name="thirdQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
 
                         {% else %}
-                            <li><label for="id_thirdQuestion{{ k.1 }}"><input type="radio" name="thirdQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
 
                         {% endif %}
 
@@ -116,14 +122,13 @@
                     </ul>
 
                     {% if list_quest_to_answer.2 == "True"%}
-                        <p id="question3Answer">Good Answer!</p>
+                        <p class = "True" id="question3Answer">Congratulations !</p>
 
                     {% else %}
-                        <p id="question3Answer">Bad Answer !</p>
+                        <p class = "False" id="question3Answer">Nice try !</p>
+                        <p class = "correction" id="descriptionQuestion3">The correct answer was : {{ list_correction.2 }}</p>
 
                     {% endif %}
-
-                    <p id="descriptionQuestion3">{{ list_correction.2 }}</p>
 
                 </div>
 
@@ -138,7 +143,7 @@
             <td>
                 <div class = "forthQuestion" name="{{ list_quest_to_answer.3 }}">
 
-                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+                    <img class="img" src="{{ image.filepath }}" id="img_0_{{ image.id }}">
 
                     <ul id="id_forthQuestion">
 
@@ -148,7 +153,6 @@
                             <li><label for="id_forthQuestion{{ k.1 }}"><input type="radio" name="forthQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
 
                         {% else %}
-                            <li><label for="forthQuestion{{ k.1 }}"><input type="radio" name="forthQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
 
                         {% endif %}
 
@@ -157,14 +161,14 @@
                     </ul>
 
                     {% if list_quest_to_answer.3 == "True"%}
-                        <p id="question4Answer">Good Answer!</p>
+                        <p class = "True" id="question4Answer">Congratulations !</p>
 
                     {% else %}
-                        <p id="question4Answer">Bad Answer !</p>
+                        <p class = "False" id="question4Answer">Nice try !</p>
+                        <p class = "correction" id="descriptionQuestion4">The correct answer was : {{ list_correction.3 }}</p>
 
                     {% endif %}
 
-                    <p id="descriptionQuestion4">{{ list_correction.3 }}</p>
 
                 </div>
 
@@ -179,7 +183,7 @@
             <td>
                 <div class = "fifthQuestion" name="{{ list_quest_to_answer.4 }}">
 
-                    <img src="{{ image.filepath }}" id="img_0_{{ image.id }}">
+                    <img class="img" src="{{ image.filepath }}" id="img_0_{{ image.id }}">
 
                     <ul id="id_fifthQuestion">
 
@@ -189,7 +193,6 @@
                             <li><label for="id_fifthQuestion{{ k.1 }}"><input type="radio" name="fifthQuestion" value="{{ k.0 }}" checked>{{ k.0 }}</label></li>
 
                         {% else %}
-                            <li><label for="id_fifthQuestion{{ k.1 }}"><input type="radio" name="fifthQuestion" value="{{ k.0 }}">{{ k.0 }}</label></li>
 
                         {% endif %}
 
@@ -198,14 +201,13 @@
                     </ul>
 
                     {% if list_quest_to_answer.4 == "True"%}
-                        <p id="question5Answer">Good Answer!</p>
+                        <p class = "True" id="question5Answer">Congratulations !</p>
 
                     {% else %}
-                        <p id="question5Answer">Bad Answer !</p>
+                        <p class = "False" id="question5Answer">Nice try !</p>
+                        <p class = "correction" id="descriptionQuestion5">The correct answer was : {{ list_correction.4}}</p>
 
                     {% endif %}
-
-                    <p id="descriptionQuestion">{{ list_correction.4}}</p>
 
                 </div>
 
@@ -213,6 +215,7 @@
             </tr>
 
             {% endif %}
+
 
 
         {% endfor %}

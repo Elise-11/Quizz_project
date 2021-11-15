@@ -135,6 +135,7 @@ class QuizzMicro(View):
             points_gained = 0
             list_quest_to_answer=[]
             list_correction =[]
+            list_description=[]
             images_iter = iter(request.session['images'])
 
             for answer in list_answers:
@@ -150,6 +151,7 @@ class QuizzMicro(View):
                     list_quest_to_answer.append("False")
 
                 list_correction.append(image.img_mode)
+                list_description.append(image.img_description)
 
             user_id = User.objects.get(id=request.user.id)
             profile_obj = Profile.objects.get(user_id=user_id)
@@ -158,6 +160,7 @@ class QuizzMicro(View):
 
             request.session['list_quest_to_answer'] = list_quest_to_answer
             request.session['list_correction'] = list_correction
+            request.session['list_description'] = list_description
 
             print(list_answers)
             print(list_correction)
@@ -179,6 +182,7 @@ def microscopy_correction(request):
         {'images': request.session.get('images'),
         'list_quest_to_answer': request.session.get('list_quest_to_answer'),
          'list_correction': request.session.get('list_correction'),
+         'list_description':request.session.get('list_description'),
          'list_choices': [('fluorescence microscopy', 0),  ('scanning electron microscopy (SEM)', 1),
           ('transmission electron microscopy (TEM)', 2), ('phase contrast microscopy', 3)],
           'list_answers': request.session.get('list_answers'),'score': score})

@@ -45,8 +45,3 @@ class Answers(models.Model):
     q_id = models.IntegerField()
     answer = models.CharField(max_length=60)
     definition = models.TextField()
-
-
-class AnswerUser(models.Model):
-    user_question = models.CharField(max_length=120)
-    good_answer_id = models.IntegerField()

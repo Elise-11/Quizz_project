@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from Quizz_project_app.forms import SearchBar, SearchBarList, QuizzMicroscopy
 from Quizz_project_app.models import Profile as profileUser
-from Quizz_project_app.models import Images, Question, Answers, AnswerUser, Profile
+from Quizz_project_app.models import Images, Question, Answers, Profile
 from django.contrib.auth.models import User
 import random
 from django.views import View

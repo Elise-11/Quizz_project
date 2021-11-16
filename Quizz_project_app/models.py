@@ -10,7 +10,6 @@ This class allows to initialize profile table in the database.
 A profile is created automatically when a user is created by the 
 authentication form provided by django in the table User. 
 '''
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     score = models.IntegerField(default=0)
@@ -34,7 +33,6 @@ def save_user_profile(sender, instance, **kwargs):
 Class: Images
 This class allows to initialize images table in the database
 '''
-
 class Images(models.Model):
     img_name = models.IntegerField()
     img_description = models.TextField()
@@ -49,7 +47,6 @@ class Images(models.Model):
 Class: Question
 This class allows to initialize question table in the database
 '''
-
 class Question(models.Model):
     quest_id = models.IntegerField()
     quest = models.CharField(max_length=60)
@@ -64,7 +61,6 @@ class Question(models.Model):
 Class: Answers
 This class allows to initialize answers table in the database
 '''
-
 class Answers(models.Model):
     answer_id = models.IntegerField()
     q_id = models.IntegerField()

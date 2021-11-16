@@ -3,7 +3,7 @@ from Quizz_project_app.forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from Quizz_project_app.forms import SearchBar, SearchBarList, QuizzMicroscopy
+from Quizz_project_app.forms import SearchBar, SearchBarList, QuizzMicroscopy, QuizzComponent
 from Quizz_project_app.models import Profile as profileUser
 from Quizz_project_app.models import Images, Question, Answers, Profile
 from django.contrib.auth.models import User
@@ -92,7 +92,6 @@ path_img = "/static/Quizz_project_app/img/img_microscopy/"
 Class QuizzMicro
 class to store methods concerning the microscopy quizz
 '''
-
 class QuizzMicro(View):
     form = QuizzMicroscopy
 
@@ -231,6 +230,64 @@ def microscopy_correction(request):
           ('transmission electron microscopy (TEM)', 2), ('phase contrast microscopy', 3)],
           'list_answers': request.session.get('list_answers'),'score': score})
 
+
+'''
+Class QuizzMicro
+class to store methods concerning the microscopy quizz
+'''
+path_img = "/static/Quizz_project_app/img/img_microscopy/"
+
+class QuizzCompo(View):
+    form = QuizzComponent
+
+    def get(self, request):
+        #associate score to user_id logged
+        user_id = User.objects.get(id=request.user.id)
+        score = Profile.objects.get(user_id=user_id)
+        score = score.score
+
+        if (score == None):
+            score = 0
+
+        # Retrieve the question concerning the microscopy
+        question = Question.objects.get(quest_type='component')
+
+        # 5 questions
+        listItems = range(0,5)
+        # this list store a dictionary containing image id and image path
+        list_images = []
+        # this list store image id used
+        used_images = []
+
+        # Generate a list of images related to answers corresponding to a q_id=1 (microscopy)
+        component_answer = [y.answer for y in Answers.objects.filter(q_id=2).all()]
+        images = list(Images.objects.filter(img_component__in=component_answer).all())
+        print(images)
+
+        # for each question
+        for items in listItems:
+
+            # Select an image randomly and extract its name
+            # construct a filepath : path of the selected image and store it
+            # store image id in used_images list
+            random_choice = random.choice(images)
+            img_name = str(random_choice.img_name)
+            file_ext = ".jpg"
+            filepath = path_img + img_name + file_ext
+            list_images.append({'id': random_choice.id, 'filepath': filepath})
+            used_images.append(random_choice.id)
+            images.remove(random_choice)
+
+        request.session['choiceQuestion'] = question.quest_type
+        request.session['question'] = question.quest
+        request.session['images'] = list_images
+
+        #return the elements to display in the html page
+        return render(request, "Quizz/Quizz_component.html",
+                      {'choiceQuestion': request.session.get('choiceQuestion'),
+                       'question': request.session.get('question'), 'form': QuizzMicro.form,
+                       'images': request.session.get('images'),
+                       'score': score})
 
 
 def searchBarExplo(request, ):

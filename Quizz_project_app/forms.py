@@ -8,7 +8,6 @@ from django import forms
 Class: CreateUserForm
 This class allows to initialize form to register a new user
 '''
-
 class CreateUserForm(UserCreationForm):
 	class Meta:
 		model = User
@@ -20,7 +19,6 @@ Class: QuizzMicroscopy
 This class allows to initialize form to Answer to the 
 questions about microscopy
 '''
-
 class QuizzMicroscopy(forms.Form):
 	choices = []
 	answer = Answers.objects.filter(q_id=1)
@@ -34,14 +32,12 @@ class QuizzMicroscopy(forms.Form):
 	fourthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	fifthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
-###############################################################################################
-###############################################################################################
+
 ''' 
 Class: QuizzComponent
 This class allows to initialize form to Answer to the 
 questions about cellular component
 '''
-
 class QuizzComponent(forms.Form):
 	choices = []
 	answer = Answers.objects.filter(q_id=2)
@@ -55,6 +51,8 @@ class QuizzComponent(forms.Form):
 	fourthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	fifthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 
+###############################################################################################
+###############################################################################################
 
 ''' 
 Class: SearchBar

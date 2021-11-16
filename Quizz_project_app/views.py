@@ -10,6 +10,12 @@ from django.contrib.auth.models import User
 import random
 from django.views import View
 
+''' 
+function:register
+This function is used when a user registers, it redirects the 
+user to the login page if they have correctly filled in the form, 
+otherwise it displays an error message. 
+'''
 
 def register(request):
     form = CreateUserForm()
@@ -29,7 +35,13 @@ def register(request):
     context = {'form': form}
     return render(request, 'Registration/register.html', context)
 
-
+''' 
+function:login_user
+This function is used when a user log in, it redirects the 
+user to the home page called choice where the user can 
+choose to play a quizz or explore data when he correctly 
+filled in the form.
+'''
 def login_user(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -46,14 +58,28 @@ def login_user(request):
     context = {}
     return render(request, 'registration/login.html', context)
 
+''' 
+function:choice
+This function is used to direct to the home page path
+'''
+
 @login_required(login_url='login')
 def choice(request):
     return render(request, 'choice.html')
 
+
+''' 
+function:logoutUser
+This function is used to direct to the login page path
+'''
 def logoutUser(request):
     logout(request)
     return redirect('login')
 
+''' 
+function: explo
+This function is used to direct to the exploration page path
+'''
 @login_required(login_url='login')
 def explo(request):
     return render(request, 'Exploration/searchBar.html')
@@ -62,9 +88,19 @@ def explo(request):
 
 path_img = "/static/Quizz_project_app/img/img_microscopy/"
 
+'''
+Class QuizzMicro
+class to store methods concerning the microscopy quizz
+'''
+
 class QuizzMicro(View):
     form = QuizzMicroscopy
 
+    '''
+    method : get
+    This method allows to display quizz microscopy elements 
+    and especially the random selection of microscopy images
+    '''
     def get(self, request):
         #associate score to user_id logged
         user_id = User.objects.get(id=request.user.id)
@@ -74,29 +110,26 @@ class QuizzMicro(View):
         if (score == None):
             score = 0
 
-        ## We extract the question concerning the microscopy
+        # Retrieve the question concerning the microscopy
         question = Question.objects.get(quest_type='microscopy')
 
         # 5 questions
         listItems = range(0, 5)
-
-        ## Creations a dictionnary to store the URLs per question
-
-
+        # this list store a dictionary containing image id and image path
         list_images = []
+        # this list store image id used
         used_images = []
-        #génère liste de réponses correcpondant à q_id 1
+
+        # Generate a list of images related to answers corresponding to a q_id=1 (microscopy)
         microscopy_answer = [x.answer for x in Answers.objects.filter(q_id=1).all()]
         images = list(Images.objects.filter(img_mode__in=microscopy_answer).all())
 
-
-        ## For each question
+        # for each question
         for items in listItems:
 
-            ## We take images whose the microscopy type corresponds to our microscopy answer
-            ## We choose a picture randomly in the databaseAnd we add it to the dictionnary_images and
-            ## to the used images
-
+            # Select an image randomly and extract its name
+            # construct a filepath : path of the selected image and store it
+            # store image id in used_images list
             random_choice = random.choice(images)
             img_name = str(random_choice.img_name)
             file_ext = ".jpg"
@@ -109,18 +142,24 @@ class QuizzMicro(View):
         request.session['question'] = question.quest
         request.session['images'] = list_images
 
+        #return the elements to display in the html page
         return render(request, "Quizz/Quizz_microscopy.html",
                       {'choiceQuestion': request.session.get('choiceQuestion'),
                        'question': request.session.get('question'), 'form': QuizzMicro.form,
                        'images': request.session.get('images'),
                        'score': score})
 
-
-
+    '''
+    method : post
+    This method allows to retrieve the user's answers, compare them to 
+    real good answers, attribute corresponding points won to user score
+    and redirect to correction page
+    '''
     def post(self, request):
 
         form = QuizzMicro.form(request.POST)
 
+        # retrieve answers in a list only if the user has chosen at least one answer for each question
         if (form.is_valid()):
 
             list_answers = [form.cleaned_data['firstQuestion'],
@@ -138,6 +177,7 @@ class QuizzMicro(View):
             list_description=[]
             images_iter = iter(request.session['images'])
 
+            # compare user's answers and correction answers in list_correction
             for answer in list_answers:
                 question = Question.objects.filter(quest_id=1)
                 image = Images.objects.filter(id=next(images_iter)['id']).first()
@@ -153,6 +193,7 @@ class QuizzMicro(View):
                 list_correction.append(image.img_mode)
                 list_description.append(image.img_description)
 
+            #add the points won to the user score and save it
             user_id = User.objects.get(id=request.user.id)
             profile_obj = Profile.objects.get(user_id=user_id)
             profile_obj.score = profile_obj.score + points_gained
@@ -162,23 +203,25 @@ class QuizzMicro(View):
             request.session['list_correction'] = list_correction
             request.session['list_description'] = list_description
 
-
-            #print(list_answers)
-            #print(list_correction)
-            #print(points_gained)
-            #print(list_quest_to_answer)
-
+            # redirect to correction page
             return redirect('microscopy_correction')
 
         else:
             print(form.errors)
 
+
+'''
+function : microscopy_correction 
+This function allows to display correction of the answers corresponding to the images
+and the new user score
+'''
 def microscopy_correction(request):
 
     user_id = User.objects.get(id=request.user.id)
     score = Profile.objects.get(user_id=user_id)
     score = score.score
 
+    #return the elements to display in the html page
     return render(request, "Quizz/microscopy_correction.html",
         {'images': request.session.get('images'),
         'list_quest_to_answer': request.session.get('list_quest_to_answer'),

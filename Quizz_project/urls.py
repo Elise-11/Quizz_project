@@ -22,7 +22,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path,include
 from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro,microscopy_correction
-#from Quizz_project_app.views import QuizzCompo
+from Quizz_project_app.views import QuizzCompo, component_correction
 from django.conf import settings
 
 from django.conf.urls.static import static
@@ -33,9 +33,10 @@ urlpatterns = [
     path('register/', register, name='register'),
     path('logout/', logoutUser, name='logout'),
     path('choice/', choice, name='choice'),
-    #path('QuizzCompo/', QuizzCompo.as_view(), name='QuizzCompo'),
+    path('QuizzCompo/', QuizzCompo.as_view(), name='QuizzCompo'),
     path('QuizzMicro/', QuizzMicro.as_view(), name='QuizzMicro'),
     path('QuizzMicro/Correction', microscopy_correction, name = 'microscopy_correction'),
+    path('QuizzCompo/Correction', component_correction, name = 'component_correction'),
     path('explo/', explo, name='explo'),
 ]
 

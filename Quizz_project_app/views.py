@@ -233,11 +233,12 @@ def microscopy_correction(request):
 
 '''
 Class QuizzMicro
-class to store methods concerning the microscopy quizz
+class to store methods concerning the component quizz
 '''
 path_img = "/static/Quizz_project_app/img/img_microscopy/"
 
 class QuizzCompo(View):
+
     form = QuizzComponent
 
     def get(self, request):
@@ -254,40 +255,137 @@ class QuizzCompo(View):
 
         # 5 questions
         listItems = range(0,5)
-        # this list store a dictionary containing image id and image path
+        # this list store a dictionary containing image component and image path
         list_images = []
         # this list store image id used
         used_images = []
+        #list to store a dictionnary containing image id
+        list_id=[]
 
         # Generate a list of images related to answers corresponding to a q_id=1 (microscopy)
         component_answer = [y.answer for y in Answers.objects.filter(q_id=2).all()]
+
         images = list(Images.objects.filter(img_component__in=component_answer).all())
         print(images)
 
+
         # for each question
         for items in listItems:
+                list_img_choices = []
+                # Select an image randomly and extract its name
+                # construct a filepath : path of the selected image and store it
+                # store image id in used_images list
+                random_choice = random.choice(images)
+                img_name = str(random_choice.img_name)
+                file_ext = ".jpg"
+                filepath = path_img + img_name + file_ext
 
-            # Select an image randomly and extract its name
-            # construct a filepath : path of the selected image and store it
-            # store image id in used_images list
-            random_choice = random.choice(images)
-            img_name = str(random_choice.img_name)
-            file_ext = ".jpg"
-            filepath = path_img + img_name + file_ext
-            list_images.append({'id': random_choice.id, 'filepath': filepath})
-            used_images.append(random_choice.id)
-            images.remove(random_choice)
+                # retrieve images with same component in a list
+                compo_choice = random_choice.img_component
+
+                for i in images:
+                    if i.img_component == compo_choice:
+                            list_img_choices.append(i)
+                #delete the image already selected
+                list_img_choices.remove(random_choice)
+
+                # second image randomly choose in this new list
+                random_choice_2 = random.choice(list_img_choices)
+                #print(random_choice_2)
+                img_name_2 = str(random_choice_2.img_name)
+                file_ext = ".jpg"
+                filepath_2 = path_img + img_name_2 + file_ext
+                images.remove(random_choice_2)
+
+                # list_image append dico key : compo, values : 2 paths
+                list_images.append({'compo': random_choice.img_component, 'filepath1':filepath,'filepath2':filepath_2})
+                list_id.append({'id': random_choice.id, 'filepath': filepath})
+                used_images.append(random_choice.id)
+                used_images.append(random_choice_2.id)
 
         request.session['choiceQuestion'] = question.quest_type
         request.session['question'] = question.quest
         request.session['images'] = list_images
+        request.session['ids'] = list_id
 
         #return the elements to display in the html page
         return render(request, "Quizz/Quizz_component.html",
                       {'choiceQuestion': request.session.get('choiceQuestion'),
-                       'question': request.session.get('question'), 'form': QuizzMicro.form,
+                       'question': request.session.get('question'), 'form': QuizzCompo.form,
                        'images': request.session.get('images'),
+                       'id':request.session.get('ids'),
                        'score': score})
+
+
+    def post(self, request):
+
+        form = QuizzCompo.form(request.POST)
+
+        # retrieve answers in a list only if the user has chosen at least one answer for each question
+        if (form.is_valid()):
+
+            list_answers = [form.cleaned_data['firstQuestion'],
+                            form.cleaned_data['secondQuestion'],
+                            form.cleaned_data['thirdQuestion'],
+                            form.cleaned_data['fourthQuestion'],
+                            form.cleaned_data['fifthQuestion']
+                            ]
+
+            request.session['list_answers'] = list_answers
+            print(request.session['list_answers'])
+            points_gained = 0
+            list_quest_to_answer=[]
+            list_correction =[]
+            id_images_iter = iter(request.session['ids'])
+
+            # compare user's answers and correction answers in list_correction
+            for answer in list_answers:
+                question = Question.objects.filter(quest_id=2)
+                image_id = Images.objects.filter(id=next(id_images_iter)['id']).first()
+                point_val = question.values('quest_point').first()['quest_point']
+
+                if answer == image_id.img_component:
+                    list_quest_to_answer.append("True")
+                    points_gained += point_val
+
+                else:
+                    list_quest_to_answer.append("False")
+
+                list_correction.append(image_id.img_component)
+
+            #add the points won to the user score and save it
+            user_id = User.objects.get(id=request.user.id)
+            profile_obj = Profile.objects.get(user_id=user_id)
+            profile_obj.score = profile_obj.score + points_gained
+            profile_obj.save()
+
+            request.session['list_quest_to_answer'] = list_quest_to_answer
+            request.session['list_correction'] = list_correction
+
+            print(request.session['list_correction'])
+            print(request.session['list_quest_to_answer'])
+            print(points_gained)
+            return redirect('microscopy_correction')
+
+        else:
+            print(form.errors)
+
+def component_correction(request):
+
+    user_id = User.objects.get(id=request.user.id)
+    score = Profile.objects.get(user_id=user_id)
+    score = score.score
+
+    #return the elements to display in the html page for Quizz component correction
+    return render(request, "Quizz/component_correction.html",
+        {'images': request.session.get('images'),
+        'list_quest_to_answer': request.session.get('list_quest_to_answer'),
+         'list_correction': request.session.get('list_correction'),
+         ### change list_choice ###
+         'list_choices': [('pollen wall', 0),  ('dendrite', 1),
+                          ('synaptic vesicle', 2), ('microtubule cytoskeleton', 3),('desmosome', 4),
+                          ('axoneme', 5),('endoplasmic reticulum', 6),('mitochondrion',7)],
+          'list_answers': request.session.get('list_answers'),'score': score})
 
 
 def searchBarExplo(request, ):

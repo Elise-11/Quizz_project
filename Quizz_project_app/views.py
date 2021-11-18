@@ -3,6 +3,7 @@ from Quizz_project_app.forms import CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from Quizz_project_app.forms import SearchBar, SearchBarList, QuizzMicroscopy, QuizzComponent
 from Quizz_project_app.models import Profile as profileUser
 from Quizz_project_app.models import Images, Question, Answers, Profile
@@ -80,17 +81,77 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+
+path_img = "/static/Quizz_project_app/img/img_microscopy/"
+
 ''' 
 function: explo
 This function is used to direct to the exploration page path
 '''
 @login_required(login_url='login')
 def explo(request):
-    return render(request, 'Exploration/searchBar.html')
+    if (request.method == "POST"):
+        form = SearchBar(request.POST)
+        form_searchBar = SearchBarList(request.POST)
+
+        if (form.is_valid()):
+            request.session['feature'] = form.cleaned_data['searchBar']
+            return redirect('exploResults')
+    else:
+        form = SearchBar
+        form_searchBar = SearchBarList
+
+    return render(request, 'Exploration/searchBar.html',
+                  {'form': form, 'formsearchBar': form_searchBar})
+
+
+''' 
+function : autocompletion
+autocomplete the search bar 
+'''
+def autocompletion(request):
+    if (request.is_ajax and request.method == 'POST'):
+        category = request.POST['category']
+        request.session['category'] = category
+        images = Images.objects.values(category)
+        images_values = []
+
+        for i in range(0, len(images)):
+            images_values.append(str(images[i][category]))
+
+        images_values = list(dict.fromkeys(images_values))
+
+        return JsonResponse(images_values, safe=False)
+
+def exploResults(request, ):
+    category = request.session['category']
+    feature = request.session['feature']
+
+    images = Images.objects.filter(**{category: feature}).all()
+    dicoImages = {}
+    counter = 0
 
 
 
-path_img = "/static/Quizz_project_app/img/img_microscopy/"
+    for i in images:
+        img_name = str(i.img_name)
+        img_src = path_img + img_name + ".jpg"
+        dicoImages[counter] = []
+        dicoImages[counter].append(img_src)
+        dicoImages[counter].append(i.img_description)
+        dicoImages[counter].append(i.img_mode)
+        dicoImages[counter].append(i.img_cell_type)
+        dicoImages[counter].append(i.img_component)
+        dicoImages[counter].append(i.img_doi)
+        dicoImages[counter].append(i.img_organism)
+        counter += 1
+
+    print(dicoImages)
+    return render(request, 'Exploration/searchResults.html',
+                  {'dicoImages': dicoImages})
+
+
+
 
 '''
 Class QuizzMicro
@@ -392,59 +453,5 @@ def component_correction(request):
           'list_answers': request.session.get('list_answers'),'score': score})
 
 
-def searchBarExplo(request, ):
-    if (request.method == "POST"):
-        form = SearchBar(request.POST)
-        formsearchBar = SearchBarList(request.POST)
-
-        score = profileUser.objects.get(username=request.user.username)
-        score = score.score
-
-        if (score == None):
-            score = 0
-
-        if (form.is_valid()):
-            request.session['feature'] = form.cleaned_data['searchBar']
-            return redirect('searchResults')
-
-    else:
-        form = SearchBar
-        formsearchBar = SearchBarList
-        score = profileUser.objects.get(username=request.user.username)
-        score = score.score
-
-        if (score == None):
-            score = 0
-
-    return render(request, 'Exploration/searchBar.html',
-                  {'form': form, 'formsearchBar': formsearchBar, 'score': score})
 
 
-def searchResults(request, ):
-    score = profileUser.objects.get(username=request.user.username)
-    score = score.score
-
-    if (score == None):
-        score = 0
-
-    category = request.session['category']
-    feature = request.session['feature']
-
-    images = Images.objects.filter(**{category: feature}).all()
-    dictionnaryImages = {}
-    counter = 0
-
-
-    for i in images:
-        dictionnaryImages[counter] = []
-        dictionnaryImages[counter].append(i.img_name)
-        dictionnaryImages[counter].append(i.img_description)
-        dictionnaryImages[counter].append(i.img_mode)
-        dictionnaryImages[counter].append(i.img_cell_type)
-        dictionnaryImages[counter].append(i.img_component)
-        dictionnaryImages[counter].append(i.img_doi)
-        dictionnaryImages[counter].append(i.img_organism)
-        counter += 1
-
-    return render(request, 'ImagesSearchBar/searchResults.html',
-                  {'dictionnaryImages': dictionnaryImages, 'score': score})

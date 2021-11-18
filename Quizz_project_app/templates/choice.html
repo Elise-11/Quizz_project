@@ -5,37 +5,40 @@
 
  <span><a  class=logout href="{% url 'logout' %}">Logout</a></span>
 
-  <span class="hello-msg">Hello {{request.user}}</span>
-    <p score ='score'>Score : {{score}}</p>
+    <p class = head score ='score'>Score : {{score}}</p>
 
-    <h3>Welcome, Make a choice</h3>
+    <h1 class =title >Welcome {{request.user}}, let's play or learn together !</h1>
+        <h2 class =title >Make your choice !</h2>
 
-
-
-
-        <div class="img_left_left">
+        <div class="img_left">
             <div class="container">
                 <a href="{% url 'QuizzMicro' %}">
-                    <img src="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" alt="Avatar" class="image" style="width:100%">
+                    <img src="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" alt="Avatar" class="image" style="width:15%">
                     <div class="middle">
                 </a>
-
-                    <div class="text">Microscopy Quizz</div>
-                </div>
+                    <div class="text_a">Microscopy Quizz</div>
             </div>
+        </div>
 
-            <div>Microscopy Quizz</div>
-            <a href="{% url 'QuizzMicro' %}"><img src ="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" class=pictureChoice></a>
+        <div class="img_center">
+            <div class="container">
+                <a href="{% url 'QuizzMicro' %}">
+                    <img src="{% static "/Quizz_project_app/img/img_choice/cell.png"%}" alt="Avatar" class="image" style="width:22%">
+                    <div class="middle">
+                </a>
+                    <div class="text">Cellular component Quizz</div>
+            </div>
+        </div>
 
-            <div>Cellular Component Quizz</div>
-            <a href="{% url 'QuizzCompo' %}"><img src="{% static "/Quizz_project_app/img/img_choice/cell.png"%}" class=pictureCellChoice></a>
-
-            <div>Search Images</div>
-            <a href="{% url 'explo' %}"><img src="{% static "/Quizz_project_app/img/img_choice/search.png"%}" class=pictureChoice></a>
-
-            <div>Explore Images</div>
-            <a href="{% url 'explo' %}"><img src="{% static "/Quizz_project_app/img/img_choice/file.png"%}" class=pictureFile></a>
-    </div>
+        <div class="img_right">
+            <div class="container">
+                <a href="{% url 'explo' %}">
+                    <img src="{% static "/Quizz_project_app/img/img_choice/search.png"%}" alt="Avatar" class="image" style="width:15%">
+                    <div class="middle">
+                </a>
+                    <div class="text_b">Explore data</div>
+            </div>
+        </div>
 
 {% endblock content %}
 

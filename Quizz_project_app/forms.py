@@ -66,7 +66,8 @@ class SearchBar(forms.Form):
 ''' 
 Class: SearchBarList
 This class allows to initialize the list box in order to
-select the item to autocomplete the search bar '''
+select the item to autocomplete the search bar 
+'''
 class SearchBarList(forms.Form):
 	columnNames = [field.name for field in Images._meta.get_fields()]
 	choices = []

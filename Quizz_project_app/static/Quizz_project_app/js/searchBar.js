@@ -1,7 +1,4 @@
 $(document).ready(function(){
-    $("#username").css({'left': '88%',
-    'overflow': 'hidden',
-    'text-overflow': 'ellipsis'});
 
     $(".quizz").css({'left': '22%'});
     $("select[name='listbox']").css({'position': 'absolute', 'top': '39.3%', 'left': '23%', 'width': '10%', 'height': '3.2%'});

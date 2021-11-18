@@ -13,7 +13,6 @@
 {% endblock %}
 
 
-
 {% block content %}
 
     <form method="POST">
@@ -25,5 +24,30 @@
         {% csrf_token %}
         {{ form.searchBar }} <button type="submit">Search</button>
     </form>
+
+    <script type="text/javascript">
+        $("select[name='listbox']").change(function(){
+            var category = $(this).val();
+
+            $.ajax({
+                headers: { "X-CSRFToken": $.cookie("csrftoken") },
+                url: "{% url 'autocompletion' %}",
+                type: 'POST',
+                data: { 'category': category,},
+                dataType: 'json',
+                success: function(dataresponse){
+                    $("input[name='searchBar']").autocomplete({
+                        source: dataresponse
+                    });
+                }
+
+            });
+
+        });
+    </script>
+
+        <td>
+        <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
+        </td>
 
 {% endblock %}

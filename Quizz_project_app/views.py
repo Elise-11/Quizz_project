@@ -65,7 +65,11 @@ This function is used to direct to the home page path
 
 @login_required(login_url='login')
 def choice(request):
-    return render(request, 'choice.html')
+    user_id = User.objects.get(id=request.user.id)
+    score = Profile.objects.get(user_id=user_id)
+    score = score.score
+
+    return render(request, 'choice.html', {'score':score})
 
 
 ''' 
@@ -365,7 +369,7 @@ class QuizzCompo(View):
             print(request.session['list_correction'])
             print(request.session['list_quest_to_answer'])
             print(points_gained)
-            return redirect('microscopy_correction')
+            return redirect('component_correction')
 
         else:
             print(form.errors)

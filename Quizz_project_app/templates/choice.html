@@ -3,19 +3,27 @@
 <link rel="stylesheet" href="{% static "Quizz_project_app/css/choice.css" %}?{% now "U"%}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
-<h3>Welcome, Make a choice</h3>
+ <span><a  class=logout href="{% url 'logout' %}">Logout</a></span>
 
   <span class="hello-msg">Hello {{request.user}}</span>
-    <!-- affichage score-->
-    <p userLoged = 'userloged'>{{request.user.id}}</p>
-    <p id = 'user_id'>{{request.Profile.user_id.userLoged}}</p>
-    <p score = 'score'>{{request.Profile.id.score}}</p>
     <p score ='score'>Score : {{score}}</p>
 
-  <span><a  class="hello-msg" href="{% url 'logout' %}">Logout</a></span>
+    <h3>Welcome, Make a choice</h3>
+
+
 
 
         <div class="img_left_left">
+            <div class="container">
+                <a href="{% url 'QuizzMicro' %}">
+                    <img src="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" alt="Avatar" class="image" style="width:100%">
+                    <div class="middle">
+                </a>
+
+                    <div class="text">Microscopy Quizz</div>
+                </div>
+            </div>
+
             <div>Microscopy Quizz</div>
             <a href="{% url 'QuizzMicro' %}"><img src ="{% static "/Quizz_project_app/img/img_choice/microscope.png" %}" class=pictureChoice></a>
 

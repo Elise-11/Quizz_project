@@ -1,0 +1,1 @@
+web: gunicorn Quizz_project.wsgi

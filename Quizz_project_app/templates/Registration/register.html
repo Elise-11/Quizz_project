@@ -6,80 +6,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <!------ Include the above in your HEAD tag ---------->
-    	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #aa8ef3 !important;
-		}
-        .register-left{
-            text-align: center;
-            color: #240342;
-            margin-top: 1%;
-        }
-        .register-left input{
-            border: none;
-            border-radius: 1.5rem;
-            padding: 2%;
-            width: 60%;
-            background: #f8f9fa;
-            font-weight: bold;
-            color: #240342;
-            margin-top: 3%;
-            margin-bottom: 3%;
-            cursor: pointer;
-
-        }
-        .register-right{
-            margin-top: 4%;
-            text-align: center;
-            color: #aa8ef3;
-            background: #260548;
-            border-top-left-radius: 10% 70%;
-            border-bottom-left-radius: 10% 70%;
-            border-top-right-radius: 10% 70%;
-            border-bottom-right-radius: 10% 70%;
-        }
-        .register-left img{
-            margin-top: 5%;
-            margin-bottom: 4%;
-            max-width: 250px;
-            max-height: 250px;
-        }
-
-        .register-left p{
-            font-weight: lighter;
-            padding: 12%;
-            margin-top: -9%;
-        }
-        .register .register-form{
-            padding: 10%;
-            margin-top: 20%;
-            margin-bottom: 20%;
-        }
-        .btnRegister{
-            float: center;
-            margin-top: 15%;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 2%;
-            background: #aa8ef3;
-            color: #240342;
-            font-weight: 600;
-            width: 70%;
-            cursor: pointer;
-        }
-
-        .register-heading{
-            text-align: center;
-            margin-top: 8%;
-            margin-bottom: -15%;
-            color: #aa8ef3;
-        }
-	</style>
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/register.css" %}?{% now "U"%}">
 
 </head>
 
@@ -90,10 +19,9 @@
 
                             <img src="{% static "/Quizz_project_app/img/giphy.gif" %}"alt=""/>
 
-                            <h3>Welcome to a great Quizz ! </h3>
-                            <a href="{% url 'home' %}" target="_parent"><button>Play</button></a>
-                            <a href="{% url 'login' %}" target="_parent"><button>Login</button></a>
-                            <a href="{% url 'explo' %}" target="_parent"><button>Explore Data</button></a>
+                            <h3>Test your cellular knowledge !</h3>
+                                <a href="{% url 'login' %}" target="_parent"><button class="button">Login</button></a>
+
                     </div>
                     <div class="col-6 register-right">
                             <h3 class="register-heading">Register</h3>
@@ -102,33 +30,37 @@
                                     {% csrf_token %}
                                 <div class="input-group mb-5">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     </div>
                                     {{form.username}}
                                 </div>
 
                                 <div class="input-group mb-2">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-key icon"></i></span>
                                     </div>
                                     {{form.password1}}
                                 </div>
 
                                 <div class="input-group mb-2">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-key icon"></i></span>
                                     </div>
                                     {{form.password2}}
                                 </div>
 
 
-
 				   		<div class="d-flex justify-content-center mt-3 login_container">
 				 			<input class="btnRegister" type="submit" value="Register Account">
 				   		</div>
+
+                        {% for message in messages %}
+                                <p id="messages">{{ message }}</p>
+                         {% endfor %}
+
 					</form>
 				</div>
-
+                </div>
     <script>
                     /* Because i didnt set placeholder values in forms.py they will be set here using vanilla Javascript
     //We start indexing at one because CSRF_token is considered and input field

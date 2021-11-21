@@ -13,28 +13,35 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls import include, url
-from django.urls import path
-from django.views.generic.base import TemplateView
+#from django.conf import settings
+#from django.urls import path
+#from django.views.generic.base import TemplateView
+#from django.contrib.auth import views as auth_views
+#from django.conf.urls.static import static
 
+from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
-from django.urls import path,include
-from Quizz_project_app.views import register, login_user, home, logoutUser, explo_image, explo_data, explo
 from django.conf import settings
-from django.conf.urls.static import static
+from django.urls import path, include
+from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro, microscopy_correction
+from Quizz_project_app.views import QuizzCompo, component_correction, autocompletion, exploResults
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', login_user, name='login'),
     path('register/', register, name='register'),
-    path('home/', home, name='home'),
     path('logout/', logoutUser, name='logout'),
+    path('choice/', choice, name='choice'),
+    path('QuizzCompo/', QuizzCompo.as_view(), name='QuizzCompo'),
+    path('QuizzMicro/', QuizzMicro.as_view(), name='QuizzMicro'),
+    path('QuizzMicro/Correction', microscopy_correction, name='microscopy_correction'),
+    path('QuizzCompo/Correction', component_correction, name='component_correction'),
     path('explo/', explo, name='explo'),
-    path('explo_image/', explo_image, name='explo_image'),
-    path('explo_data/', explo_data, name='explo_data'),
+    path('Results/', exploResults, name='exploResults'),
+    path('autocompletion/', autocompletion, name="autocompletion"),
 ]
+
 
 if settings.DEBUG:
     import debug_toolbar

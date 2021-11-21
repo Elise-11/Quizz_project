@@ -1,3 +1,4 @@
+{% load static %}
 <html>
 
 <head>
@@ -5,55 +6,9 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 <!------ Include the above in your HEAD tag ---------->
-    	<style>
-		body,
-		html {
-			margin: 0;
-			padding: 0;
-			height: 100%;
-			background: #aa8ef3 !important;
-		}
-
-        .register-right{
-            margin-top: 4%;
-            text-align: center;
-            color: #aa8ef3;
-            background: #260548;
-            border-top-left-radius: 10% 70%;
-            border-bottom-left-radius: 10% 70%;
-            border-top-right-radius: 10% 70%;
-            border-bottom-right-radius: 10% 70%;
-            margin-right: 35%;
-            margin-left: 25%;
-        }
-
-
-        .register .register-form{
-            padding: 10%;
-            margin-top: 20%;
-            margin-bottom: 20%;
-        }
-        .btnRegister{
-            float: center;
-            margin-top: 15%;
-            border: none;
-            border-radius: 1.5rem;
-            padding: 2%;
-            background: #aa8ef3;
-            color: #240342;
-            font-weight: 600;
-            width: 70%;
-            cursor: pointer;
-        }
-
-        .register-heading{
-            text-align: center;
-            margin-top: 8%;
-            margin-bottom: -15%;
-            color: #aa8ef3;
-        }
-	</style>
+<link rel="stylesheet" href="{% static "Quizz_project_app/css/login.css" %}?{% now "U"%}">
 
 </head>
 
@@ -61,27 +16,27 @@
 <div class="container register">
                 <div class="row">
 
-                    <div class="col-6 register-right">
-                            <h3 class="register-heading">Login</h3>
+                    <div class="col-6 login-center">
+                            <h3 class="register-heading">Log in to play !</h3>
                             <div class="row register-form">
                                 <form method="POST" action="">
                                     {% csrf_token %}
                                 <div class="input-group mb-5">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-user"></i></span>
                                     </div>
                                     <input type="text" name="username" placeholder="Username..." class="form-control">
                                 </div>
 
                                 <div class="input-group mb-2">
                                     <div class="input-group-append">
-                                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                        <span class="input-group-text"><i class="fa fa-key icon"></i></span>
                                     </div>
                                     <input type="password" name="password" placeholder="Password..." class="form-control" >
                                 </div>
 
 				   		<div class="d-flex justify-content-center mt-3 login_container">
-				 			<input class="btnRegister" type="submit" value="Login">
+				 			<input class="btnLogin" type="submit" value="Login">
 				   		</div>
                             </div>
 

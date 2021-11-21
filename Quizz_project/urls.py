@@ -13,19 +13,19 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf import settings
-from django.conf.urls import include, url
-from django.urls import path
-from django.views.generic.base import TemplateView
+#from django.conf import settings
+#from django.urls import path
+#from django.views.generic.base import TemplateView
+#from django.contrib.auth import views as auth_views
+#from django.conf.urls.static import static
 
+from django.conf.urls import url
 from django.contrib import admin
-from django.contrib.auth import views as auth_views
-from django.urls import path,include
-from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro,microscopy_correction
-from Quizz_project_app.views import QuizzCompo, component_correction, autocompletion, exploResults
 from django.conf import settings
+from django.urls import path, include
+from Quizz_project_app.views import register, login_user, choice, logoutUser, explo, QuizzMicro, microscopy_correction
+from Quizz_project_app.views import QuizzCompo, component_correction, autocompletion, exploResults
 
-from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +41,7 @@ urlpatterns = [
     path('Results/', exploResults, name='exploResults'),
     path('autocompletion/', autocompletion, name="autocompletion"),
 ]
+
 
 if settings.DEBUG:
     import debug_toolbar

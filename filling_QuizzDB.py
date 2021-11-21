@@ -102,17 +102,14 @@ def run():
                              quest=dictionnary_lineQuestion[iterator][1],
                              quest_type=dictionnary_lineQuestion[iterator][2],
                              quest_image_field=dictionnary_lineQuestion[iterator][3],
-                             quest_point =int(dictionnary_lineQuestion[iterator][4]),
-                             n_answer=int(dictionnary_lineQuestion[iterator][5]),
-                             n_image=int(dictionnary_lineQuestion[iterator][6]))
+                             quest_point =int(dictionnary_lineQuestion[iterator][4]))
+
 
         if (not Question.objects.filter(quest_id=int(dictionnary_lineQuestion[iterator][0]),
                                          quest=dictionnary_lineQuestion[iterator][1],
                                          quest_type=dictionnary_lineQuestion[iterator][2],
                                          quest_image_field=dictionnary_lineQuestion[iterator][3],
-                                         quest_point =int(dictionnary_lineQuestion[iterator][4]),
-                                         n_answer=int(dictionnary_lineQuestion[iterator][5]),
-                                         n_image=int(dictionnary_lineQuestion[iterator][6])).exists()):
+                                         quest_point =int(dictionnary_lineQuestion[iterator][4])).exists()):
                     question.save()
 
 

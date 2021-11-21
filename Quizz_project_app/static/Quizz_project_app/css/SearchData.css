@@ -1,0 +1,42 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #aa8ef3 !important;
+}
+
+.image{
+    width:15%;
+    height:auto;
+}
+
+.title{
+    text-align: center;
+    padding-top:7%;
+}
+
+.center{
+    text-align: center;
+}
+
+.button{
+  background-color: #240342;
+  border: none;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 2px 1px;
+  border-radius: 2rem;
+}
+
+.ui-autocomplete{
+    color: #260548;
+}
+
+.br {
+   margin: 40px;
+}

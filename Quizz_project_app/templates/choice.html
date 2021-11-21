@@ -5,7 +5,7 @@
 
  <span><a  class=logout href="{% url 'logout' %}">Logout</a></span>
 
-    <p class = head score ='score'>Score : {{score}}</p>
+    <p class = head score ='score'>Your score : {{score}}</p>
 
     <h1 class =title >Welcome {{request.user}}, let's play or learn together !</h1>
         <h2 class =title >Make your choice !</h2>
@@ -22,7 +22,7 @@
 
         <div class="img_center">
             <div class="container">
-                <a href="{% url 'QuizzMicro' %}">
+                <a href="{% url 'QuizzCompo' %}">
                     <img src="{% static "/Quizz_project_app/img/img_choice/cell.png"%}" alt="Avatar" class="image" style="width:22%">
                     <div class="middle">
                 </a>

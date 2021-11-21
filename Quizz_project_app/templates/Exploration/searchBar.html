@@ -1,19 +1,22 @@
 {% load static %}
 
-
 {% block extrahead %}
 
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
     <script src="{% static 'js/searchBar.js'%}"></script>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{% static "Quizz_project_app/css/SearchData.css" %}?{% now "U"%}">
 
 {% endblock %}
 
-
 {% block content %}
+    <div class="center">
+    <h2 class="title">Explore the beautiful images from cell image library ! </h2>
+    <img class="image" src="{% static "/Quizz_project_app/img/microscope.gif" %}"alt=""/>
+
 
     <form method="POST">
         {% csrf_token %}
@@ -22,10 +25,10 @@
 
     <form method="POST">
         {% csrf_token %}
-        {{ form.searchBar }} <button type="submit">Search</button>
+        {{ form.searchBar }} <button class="button" type="submit">Search</button>
     </form>
 
-    <script type="text/javascript">
+    <script  type="text/javascript">
         $("select[name='listbox']").change(function(){
             var category = $(this).val();
 
@@ -40,14 +43,12 @@
                         source: dataresponse
                     });
                 }
-
             });
-
         });
     </script>
 
-        <td>
         <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
-        </td>
+
+    </div>
 
 {% endblock %}

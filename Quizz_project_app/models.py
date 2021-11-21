@@ -53,8 +53,6 @@ class Question(models.Model):
     quest_type= models.CharField(max_length=60)
     quest_image_field = models.CharField(max_length=60)
     quest_point= models.IntegerField()
-    n_answer = models.IntegerField()
-    n_image = models.IntegerField()
 
 
 ''' 

@@ -3,6 +3,29 @@ from django.contrib.auth.models import User
 from Quizz_project_app.models import Images, Answers
 from django import forms
 
+''' 
+Class: SearchBar
+This class allows to initialize the search bar
+in order to search images
+'''
+class SearchBar(forms.Form):
+    searchBar = forms.CharField(max_length=200)
+
+
+''' 
+Class: SearchBarList
+This class allows to initialize the list box in order to
+select the item to allow autocompleting of the search bar 
+and fill the choice list with elements refering to the selected item
+'''
+class SearchBarList(forms.Form):
+	columnNames = [field.name for field in Images._meta.get_fields()]
+	choices = []
+	choices.append(("", ""))
+	for i in columnNames:
+		choices.append((i, i))
+
+	listbox = forms.CharField(widget=forms.Select(choices=choices))
 
 ''' 
 Class: CreateUserForm
@@ -50,29 +73,3 @@ class QuizzComponent(forms.Form):
 	thirdQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	fourthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
 	fifthQuestion = forms.ChoiceField(choices=choices, widget=forms.RadioSelect)
-
-###############################################################################################
-###############################################################################################
-
-''' 
-Class: SearchBar
-This class allows to initialize the search bar
-in order to search pictures in the pictures gallery 
-'''
-class SearchBar(forms.Form):
-    searchBar = forms.CharField(max_length=200)
-
-
-''' 
-Class: SearchBarList
-This class allows to initialize the list box in order to
-select the item to autocomplete the search bar 
-'''
-class SearchBarList(forms.Form):
-	columnNames = [field.name for field in Images._meta.get_fields()]
-	choices = []
-	choices.append(("", ""))
-	for i in columnNames:
-		choices.append((i, i))
-
-	listbox = forms.CharField(widget=forms.Select(choices=choices))

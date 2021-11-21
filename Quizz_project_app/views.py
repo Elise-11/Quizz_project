@@ -63,7 +63,6 @@ def login_user(request):
 function:choice
 This function is used to direct to the home page path
 '''
-
 @login_required(login_url='login')
 def choice(request):
     user_id = User.objects.get(id=request.user.id)
@@ -82,11 +81,13 @@ def logoutUser(request):
     return redirect('login')
 
 
+#path to images directory
 path_img = "/static/Quizz_project_app/img/img_microscopy/"
 
 ''' 
 function: explo
-This function is used to direct to the exploration page path
+This function is used to display elements needed to
+the exploration page path
 '''
 @login_required(login_url='login')
 def explo(request):
@@ -107,7 +108,7 @@ def explo(request):
 
 ''' 
 function : autocompletion
-autocomplete the search bar 
+autocomplete the search bar
 '''
 def autocompletion(request):
     if (request.is_ajax and request.method == 'POST'):
@@ -123,6 +124,11 @@ def autocompletion(request):
 
         return JsonResponse(images_values, safe=False)
 
+'''
+function : exploResult 
+This function allows to return elements corresponding to 
+the search to another page, the result page
+'''
 def exploResults(request, ):
     category = request.session['category']
     feature = request.session['feature']
@@ -130,8 +136,6 @@ def exploResults(request, ):
     images = Images.objects.filter(**{category: feature}).all()
     dicoImages = {}
     counter = 0
-
-
 
     for i in images:
         img_name = str(i.img_name)
@@ -149,8 +153,6 @@ def exploResults(request, ):
     print(dicoImages)
     return render(request, 'Exploration/searchResults.html',
                   {'dicoImages': dicoImages})
-
-
 
 
 '''
@@ -446,12 +448,7 @@ def component_correction(request):
         {'images': request.session.get('images'),
         'list_quest_to_answer': request.session.get('list_quest_to_answer'),
          'list_correction': request.session.get('list_correction'),
-         ### change list_choice ###
          'list_choices': [('pollen wall', 0),  ('dendrite', 1),
                           ('synaptic vesicle', 2), ('microtubule cytoskeleton', 3),('desmosome', 4),
                           ('axoneme', 5),('endoplasmic reticulum', 6),('mitochondrion',7)],
           'list_answers': request.session.get('list_answers'),'score': score})
-
-
-
-

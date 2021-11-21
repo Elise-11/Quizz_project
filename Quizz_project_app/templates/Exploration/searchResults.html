@@ -5,11 +5,13 @@
      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <script src="{% static 'js/searchResults.js' %}"></script>
+    <link rel="stylesheet" href="{% static "Quizz_project_app/css/SearchData.css" %}?{% now "U"%}">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 {% endblock %}
 
 <td>
-    <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
+    <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'explo' %}';"> Back </button>
 </td>
 
 {% block content %}
@@ -20,13 +22,13 @@
 
         <tr>
 
-            <td><img src="{{ j.0 }}" style="width:40%"></td>
-            <td><span name="Description">Description:</span> {{ j.1 }} <br>
+            <td><img src="{{ j.0 }}" style="width:70%"></td>
+            <td><span name="Description">Description:</span> {{ j.1 }} <br><br>
             <span name="Microscopy">Microscopy:</span> {{ j.2 }} <br>
             <span name="Cell_type">Cell Type:</span> {{ j.3 }} <br>
             <span name="Component">Component:</span> {{ j.4 }} <br>
-            <span name="doi">doi:</span> {{ j.5 }} <br>
-            <span name="Organism">Organism:</span> {{ j.6 }}
+            <span name="Organism">Organism:</span> {{ j.6 }}<br>
+            <span name="Doi"></span> {{j.5}} <br><br><br>
             </td>
 
         </tr>

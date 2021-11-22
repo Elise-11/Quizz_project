@@ -14,9 +14,12 @@
 
 {% block content %}
     <div class="center">
-    <h2 class="title">Explore the beautiful images from cell image library ! </h2>
-    <img class="image" src="{% static "/Quizz_project_app/img/microscope.gif" %}"alt=""/>
 
+    <h2 class="title" >Explore the beautiful images from cell image library ! </h2>
+
+    <a href="http://www.cellimagelibrary.org/home">
+    <img class="image" src="{% static "/Quizz_project_app/img/microscope.gif" %}"alt=""/>
+    </a>
 
     <form method="POST">
         {% csrf_token %}

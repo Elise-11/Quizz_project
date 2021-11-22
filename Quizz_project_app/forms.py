@@ -6,7 +6,7 @@ from django import forms
 ''' 
 Class: SearchBar
 This class allows to initialize the search bar
-in order to search images
+field in order to search images
 '''
 class SearchBar(forms.Form):
     searchBar = forms.CharField(max_length=200)

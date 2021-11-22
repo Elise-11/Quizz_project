@@ -5,6 +5,7 @@
 {% block content %}
 
 <div class="score">{{ request.user.username }} new score : {{ score }} points</div>
+    <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
 
 
     <table class= "Answers" name="tableAnswers">
@@ -220,11 +221,7 @@
             {% endif %}
 
         {% endfor %}
-        <tr>
-        <td>
-        <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
-        </td>
-        </tr>
+
     </table>
 
 {% endblock content %}

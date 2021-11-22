@@ -7,6 +7,7 @@
 {% endblock %}
 {% block content %}
 <div class="score">{{ request.user.username }} score : {{ score }} points</div>
+    <button class = "button" id="buttonReturn" onclick="location.href = '{% url 'choice' %}';"> Back to home page</button>
 
     <div class= "Question">
     <div class="h1">{{ question }}</div>

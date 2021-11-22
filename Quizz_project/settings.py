@@ -30,8 +30,8 @@ if os.environ.get('ENV') == 'PRODUCTION':
 else:
     DEBUG = True
 
-ALLOWED_HOSTS = [quizz-project-fe.herokuapp.com]
-#ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = [quizz-project-fe.herokuapp.com]
+ALLOWED_HOSTS = []
 
 if os.environ.get('ENV') == 'PRODUCTION':
 

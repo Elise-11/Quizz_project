@@ -62,6 +62,7 @@ def login_user(request):
 ''' 
 function:choice
 This function is used to direct to the home page path
+containing the user score 
 '''
 @login_required(login_url='login')
 def choice(request):
@@ -87,20 +88,18 @@ path_img = "/static/Quizz_project_app/img/img_microscopy/"
 ''' 
 function: explo
 This function is used to display elements needed to
-the exploration page path
+the exploration page path et redirect to page containing 
+the result of the search
 '''
 @login_required(login_url='login')
 def explo(request):
-    if (request.method == "POST"):
-        form = SearchBar(request.POST)
-        form_searchBar = SearchBarList(request.POST)
+    form = SearchBar(request.POST)
+    form_searchBar = SearchBarList(request.POST)
 
-        if (form.is_valid()):
-            request.session['feature'] = form.cleaned_data['searchBar']
-            return redirect('exploResults')
-    else:
-        form = SearchBar
-        form_searchBar = SearchBarList
+    #if the search bar is filled it redirects the user to the corresponding result page
+    if (form.is_valid()):
+        request.session['feature'] = form.cleaned_data['searchBar']
+        return redirect('exploResults')
 
     return render(request, 'Exploration/searchBar.html',
                   {'form': form, 'formsearchBar': form_searchBar})
@@ -108,26 +107,31 @@ def explo(request):
 
 ''' 
 function : autocompletion
-autocomplete the search bar
+autocomplete the search bar according to selected item 
+among the Images attributes thanks to library ajax from jquery 
 '''
 def autocompletion(request):
+    #category correspond to the selected item in the listbox (script in searchBar.html)
     if (request.is_ajax and request.method == 'POST'):
         category = request.POST['category']
         request.session['category'] = category
         images = Images.objects.values(category)
         images_values = []
 
+        #store the Image values in the selected category in a new list
         for i in range(0, len(images)):
             images_values.append(str(images[i][category]))
 
+        #display the list in a listbox when the user write in the search bar
         images_values = list(dict.fromkeys(images_values))
-
         return JsonResponse(images_values, safe=False)
 
 '''
 function : exploResult 
 This function allows to return elements corresponding to 
-the search to another page, the result page
+the search to another page, the exploration result page.
+for each result corresponding to the search a key is created with
+an associated list containing all the attribute of the searched image.
 '''
 def exploResults(request, ):
     category = request.session['category']
@@ -150,7 +154,6 @@ def exploResults(request, ):
         dicoImages[counter].append(i.img_organism)
         counter += 1
 
-    print(dicoImages)
     return render(request, 'Exploration/searchResults.html',
                   {'dicoImages': dicoImages})
 

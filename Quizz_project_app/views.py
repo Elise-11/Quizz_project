@@ -17,7 +17,6 @@ This function is used when a user registers, it redirects the
 user to the login page if they have correctly filled in the form, 
 otherwise it displays an error message. 
 '''
-
 def register(request):
     form = CreateUserForm()
 
@@ -336,7 +335,6 @@ class QuizzCompo(View):
         component_answer = [y.answer for y in Answers.objects.filter(q_id=2).all()]
 
         images = list(Images.objects.filter(img_component__in=component_answer).all())
-        print(images)
 
 
         # for each question

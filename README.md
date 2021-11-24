@@ -2,11 +2,11 @@
 ![Dep](https://img.shields.io/badge/Dependencies-conda_environnement-green.svg)
 ![Theme](https://img.shields.io/badge/Theme-Cellular_image_quiz-light.svg)
 
-#Quizz_project developped with Django 
+# Quizz_project developped with Django 
 
 
-###M2-DLAD 
-####2021-2022
+### M2-DLAD 
+#### 2021-2022
 
 ## • Project general description 
 The project is a website with two quizzes, one on the type of microscopy used to capture 
